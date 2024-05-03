@@ -14,6 +14,9 @@ namespace TaskManagement.Controllers.LoginSignup
             return View();
         }
 
-        
+        public ActionResult RegistrationPage()
+        {
+            return View();
+        }
     }
 }
