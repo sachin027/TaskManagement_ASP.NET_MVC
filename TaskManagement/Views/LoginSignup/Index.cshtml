@@ -2,6 +2,19 @@
 @{
     ViewBag.Title = "Index";
 }
+    @if (TempData["error"] != null)
+    {
+        <script>
+            toastr.error('@TempData["error"]')
+        </script>
+    }
+
+    @if (TempData["success"] != null)
+    {
+        <script>
+            toastr.success('@TempData["success"]')
+        </script>
+    }
 
 <section class="ftco-section">
     <div class="container">
@@ -65,7 +78,7 @@
                         </form>
 
                         <p class="text-center">Not a member? @Html.ActionLink("SignUp", "RegistrationPage")</p>
-                        
+
                     </div>
 
                 </div>

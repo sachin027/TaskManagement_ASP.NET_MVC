@@ -33,14 +33,17 @@ namespace TaskManagement.Controllers.LoginSignup
 
                     if(login.Role == "Student") { 
                         return RedirectToAction("RegistrationPage","LoginSignup");
+                        TempData["success"] = "Login successfully ";
                     }
                     else
                     {
+                        TempData["success"] = "Login successfully ";
                         return View();
                     }
                 }
                 else
                 {
+                    TempData["error"] = "Login Failed !";
                     return RedirectToAction("Index", "LoginSignup");
                 }
             }
@@ -64,6 +67,7 @@ namespace TaskManagement.Controllers.LoginSignup
             {
                 if (_userPanel.Signup(signup) == true)
                 {
+                    TempData["success"] = "Register successfully ";
                     return View("Index");
                 }
                 else

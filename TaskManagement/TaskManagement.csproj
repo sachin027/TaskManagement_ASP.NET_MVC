@@ -163,6 +163,8 @@
     <Content Include="Content\Theme\LoginSignup\js\jquery.min.js" />
     <Content Include="Content\Theme\LoginSignup\js\main.js" />
     <Content Include="Content\Theme\LoginSignup\js\popper.js" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -266,6 +268,8 @@
     <Content Include="Content\Theme\LoginSignup\scss\bootstrap\_utilities.scss" />
     <Content Include="Content\Theme\LoginSignup\scss\bootstrap\_variables.scss" />
     <Content Include="Content\Theme\LoginSignup\scss\style.scss" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -277,6 +281,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
