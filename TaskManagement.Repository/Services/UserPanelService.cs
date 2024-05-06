@@ -14,7 +14,56 @@ namespace TaskManagement.Repository.Services
 	public class UserPanelService : IUserPanelInterface
 	{
 	 TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
-		public bool Signup(SignupCustomModel user)
+
+		/// <summary>
+		/// Login service for already user 
+		/// check which role and validate with DB
+		/// </summary>
+        public bool Login(SignupCustomModel login)
+        {
+            try
+            {
+                if (login.Role == "Student")
+                {
+					Students student = new Students();
+					student = LoginSignupHelper.ConvertSignupStudentModelToSignup(login);
+					student = _DBContext.Students.Where(x => x.Username == login.Username && x.Password == login.Password).FirstOrDefault();
+
+					if(student != null)
+                    {
+						return true;
+                    }
+					return false;
+                }
+                else if(login.Role == "Teacher")
+                {
+					Teachers teachers = new Teachers();
+					teachers = LoginSignupHelper.ConvertSignupTeacherModelToSignup(login);
+					teachers = _DBContext.Teachers.Where(x => x.Username == login.Username && x.Password == login.Password).FirstOrDefault();
+
+					if(teachers != null)
+                    {
+						return true;
+                    }
+					return false;
+                }
+                else
+                {
+					return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }           
+        }
+
+
+		/// <summary>
+		/// sign up service 
+		/// check which is role is selected and then according to role save into particular table
+		/// </summary>
+        public bool Signup(SignupCustomModel user)
 		{
 			try
 			{

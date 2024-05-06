@@ -288,9 +288,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\LoginSignup\Index.cshtml" />
     <Content Include="Views\LoginSignup\RegistrationPage.cshtml" />
+    <Content Include="Views\LoginSignup\Student.cshtml" />
+    <Content Include="Views\LoginSignup\Teacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Student\" />
+    <Folder Include="Views\Teacher\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

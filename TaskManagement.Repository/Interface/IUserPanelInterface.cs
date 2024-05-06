@@ -9,6 +9,11 @@ namespace TaskManagement.Repository.Interface
 {
     public interface IUserPanelInterface
     {
+        //login interface
+        bool Login(SignupCustomModel login);
+
+
+        //Signup interface 
         bool Signup(SignupCustomModel user);
     }
 }

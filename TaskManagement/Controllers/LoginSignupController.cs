@@ -21,18 +21,30 @@ namespace TaskManagement.Controllers.LoginSignup
         }
 
         [HttpPost]
-        public String Index(LoginDetailsModel loginDetails)
+        public ActionResult Index([Bind(Include ="Role ,Username , Password")] SignupCustomModel login)
         {
-            string name = "";
-            if (loginDetails.UserRole == "Student")
+            try
             {
-                name = "Student";
+                if (_userPanel.Login(login))
+                {
+                    if(login.Role == "Student") { 
+                        return RedirectToAction("RegistrationPage","LoginSignup");
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index", "LoginSignup");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                name = "Teacher";
+
+                throw ex;
             }
-            return name;
         }
 
         public ActionResult RegistrationPage()
