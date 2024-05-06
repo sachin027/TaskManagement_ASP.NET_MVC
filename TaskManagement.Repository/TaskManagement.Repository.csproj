@@ -31,7 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,12 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Interface\LoginSignupInterface\ILoginSignupInterface.cs" />
+    <Compile Include="Interface\IUserPanelInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\LoginSignup\RegisterStudentService.cs" />
+    <Compile Include="Services\UserPanelService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManagement.Helper\TaskManagement.Helper.csproj">
+      <Project>{5C680CA6-3A4F-4FC0-906F-9A57B7A871E5}</Project>
+      <Name>TaskManagement.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManagement.Models\TaskManagement.Models.csproj">
       <Project>{A9F25795-0DE9-4B6F-9475-2AAD1CDB170C}</Project>
       <Name>TaskManagement.Models</Name>
