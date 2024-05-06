@@ -23,9 +23,9 @@ namespace TaskManagement.Models.ViewModel
         //[Required]
         public string Role { get; set; }
         //[Required]
-        public string State { get; set; }
+        public string State { get; set; } //tell me if anychange
         //[Required]
-        public string City { get; set; }
+        public string City { get; set; } //give me if any change
         //[Required]
         public string Address { get; set; }
 

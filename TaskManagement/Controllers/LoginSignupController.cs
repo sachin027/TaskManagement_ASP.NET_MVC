@@ -32,13 +32,13 @@ namespace TaskManagement.Controllers.LoginSignup
                     SessionHelper.SessionHelper.Username = login.Username;
 
                     if(login.Role == "Student") { 
-                        return RedirectToAction("RegistrationPage","LoginSignup");
+                        return RedirectToAction("StudentDashboard","Student");
                         TempData["success"] = "Login successfully ";
                     }
                     else
                     {
                         TempData["success"] = "Login successfully ";
-                        return View();
+                        return RedirectToAction("TeaacherDashboard","Teacher");
                     }
                 }
                 else
