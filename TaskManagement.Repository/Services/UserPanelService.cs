@@ -13,15 +13,14 @@ namespace TaskManagement.Repository.Services
 
 	public class UserPanelService : IUserPanelInterface
 	{
-		private readonly TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+	 TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
 		public bool Signup(SignupCustomModel user)
 		{
 			try
 			{
 				if (user.Role == "Student")
 				{
-					Students st = new Students();
-					st = LoginSignupHelper.ConvertSignupStudentModelToSignup(user);
+					Students st =  LoginSignupHelper.ConvertSignupStudentModelToSignup(user);
 					// var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
 
 					_DBContext.Students.Add(st);
@@ -30,8 +29,7 @@ namespace TaskManagement.Repository.Services
 				}
 				else
 				{
-					Teachers teachers = new Teachers();
-					teachers = LoginSignupHelper.ConvertSignupTeacherModelToSignup(user);
+					Teachers teachers =  LoginSignupHelper.ConvertSignupTeacherModelToSignup(user);
 					_DBContext.Teachers.Add(teachers);
 					_DBContext.SaveChanges();
 					return true;

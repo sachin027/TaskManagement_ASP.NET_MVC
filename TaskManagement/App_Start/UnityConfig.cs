@@ -1,6 +1,8 @@
 using System.Web.Mvc;
 using Unity;
 using Unity.Mvc5;
+using TaskManagement.Repository.Interface;
+using TaskManagement.Repository.Services;
 
 namespace TaskManagement
 {
@@ -13,7 +15,7 @@ namespace TaskManagement
             // register all your components with the container here
             // it is NOT necessary to register your controllers
             
-            // e.g. container.RegisterType<ITestService, TestService>();
+          container.RegisterType<IUserPanelInterface, UserPanelService>();
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
