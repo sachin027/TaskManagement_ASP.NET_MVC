@@ -17,6 +17,7 @@ namespace TaskManagement.Controllers.LoginSignup
         // GET: LoginSignup
         public ActionResult Index()
         {
+            Session.Clear();
             return View();
         }
 
@@ -27,6 +28,9 @@ namespace TaskManagement.Controllers.LoginSignup
             {
                 if (_userPanel.Login(login))
                 {
+
+                    SessionHelper.SessionHelper.Username = login.Username;
+
                     if(login.Role == "Student") { 
                         return RedirectToAction("RegistrationPage","LoginSignup");
                     }
@@ -49,6 +53,7 @@ namespace TaskManagement.Controllers.LoginSignup
 
         public ActionResult RegistrationPage()
         {
+            
             return View();
         }
 

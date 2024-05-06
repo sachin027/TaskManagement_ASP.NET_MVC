@@ -71,7 +71,6 @@ namespace TaskManagement.Repository.Services
 				{
 					Students st =  LoginSignupHelper.ConvertSignupStudentModelToSignup(user);
 					// var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
-
 					_DBContext.Students.Add(st);
 					_DBContext.SaveChanges();
 					return true;
