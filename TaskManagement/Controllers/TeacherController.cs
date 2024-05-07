@@ -7,8 +7,6 @@ using TaskManagement.CustomFilter;
 
 namespace TaskManagement.Controllers
 {
-    [CustomAuthorize]
-    [CustomStudentAuthorizeAttribute]
 
     public class TeacherController : Controller
     {

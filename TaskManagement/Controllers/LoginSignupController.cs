@@ -50,7 +50,7 @@ namespace TaskManagement.Controllers.LoginSignup
                     }
                 }
 
-                if(login.Role == "Teacher")
+                else if(login.Role == "Teacher")
                 {
                     bool isValidUser = _userPanel.Login(login);
                     if (isValidUser)
@@ -62,8 +62,9 @@ namespace TaskManagement.Controllers.LoginSignup
                         TempData["success"] = "Login successfully ";
                     }
                 }
-                TempData["error"] = "Login Failed !";
-                return RedirectToAction("Index", "LoginSignup");
+                    TempData["error"] = "Login Failed !";
+                    return RedirectToAction("Index", "LoginSignup");
+
                 
             }
             catch (Exception ex)
