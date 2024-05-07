@@ -22,10 +22,8 @@ namespace TaskManagement.Models.ViewModel
         public string PhoneNumber { get; set; }
         //[Required]
         public string Role { get; set; }
-        //[Required]
-        public string State { get; set; } //tell me if anychange
-        //[Required]
-        public string City { get; set; } //give me if any change
+        public Nullable<int> StateID { get; set; }
+        public Nullable<int> CityID { get; set; }
         //[Required]
         public string Address { get; set; }
 

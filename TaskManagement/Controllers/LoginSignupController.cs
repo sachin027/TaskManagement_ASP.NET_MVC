@@ -13,7 +13,17 @@ namespace TaskManagement.Controllers.LoginSignup
     public class LoginSignupController : Controller
     {
         IUserPanelInterface _userPanel = new UserPanelService();
-        
+
+        private readonly ICityInterface _city;
+        private readonly IStateInterface _state;
+
+        public LoginSignupController()
+        {
+            this._city = new CityServices();
+            this._state = new StateServices();
+
+        }
+
         // GET: LoginSignup
         public ActionResult Index()
         {
@@ -56,7 +66,7 @@ namespace TaskManagement.Controllers.LoginSignup
 
         public ActionResult RegistrationPage()
         {
-            
+            ViewBag.States = _state.StateModelList();
             return View();
         }
 
@@ -81,6 +91,15 @@ namespace TaskManagement.Controllers.LoginSignup
 
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// City dropdown 
+        /// </summary>
+        public JsonResult CitiesByState(int id)
+        {
+            List<CityModel> list = _city.GetCityByStateId(id);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }
