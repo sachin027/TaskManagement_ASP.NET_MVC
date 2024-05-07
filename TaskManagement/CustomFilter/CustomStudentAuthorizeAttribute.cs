@@ -1,18 +1,17 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using TaskManagement.Models.DBContext;
-using TaskManagement.Models.ViewModel;
-
 
 namespace TaskManagement.CustomFilter
 {
-    public class CustomAuthorizeAttribute : AuthorizeAttribute
+    public class CustomStudentAuthorizeAttribute : AuthorizeAttribute
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if(SessionHelper.SessionHelper.Username!= "" && SessionHelper.SessionHelper.UserId != "" && SessionHelper.SessionHelper.Role!= "")
+            if (SessionHelper.SessionHelper.Username != "" && SessionHelper.SessionHelper.UserId != "" && SessionHelper.SessionHelper.Role != "Student")
             {
                 return true;
             }

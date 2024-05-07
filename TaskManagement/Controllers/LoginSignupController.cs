@@ -10,6 +10,7 @@ using TaskManagement.Repository.Services;
 
 namespace TaskManagement.Controllers.LoginSignup
 {
+    
     public class LoginSignupController : Controller
     {
         IUserPanelInterface _userPanel = new UserPanelService();
@@ -36,26 +37,34 @@ namespace TaskManagement.Controllers.LoginSignup
         {
             try
             {
-                if (_userPanel.Login(login))
+                if(login.Role == "Student")
                 {
-
-                    SessionHelper.SessionHelper.Username = login.Username;
-
-                    if(login.Role == "Student") { 
-                        return RedirectToAction("StudentDashboard","Student");
-                        TempData["success"] = "Login successfully ";
-                    }
-                    else
+                    bool isValidUser = _userPanel.Login(login);
+                    if (isValidUser)
                     {
+                        SessionHelper.SessionHelper.Username = login.Username;
+                        SessionHelper.SessionHelper.Role = login.Role;
+
+                        return RedirectToAction("StudentDashboard", "Student");
                         TempData["success"] = "Login successfully ";
-                        return RedirectToAction("TeaacherDashboard","Teacher");
                     }
                 }
-                else
+
+                if(login.Role == "Teacher")
                 {
-                    TempData["error"] = "Login Failed !";
-                    return RedirectToAction("Index", "LoginSignup");
+                    bool isValidUser = _userPanel.Login(login);
+                    if (isValidUser)
+                    {
+                        SessionHelper.SessionHelper.Username = login.Username;
+                        SessionHelper.SessionHelper.Role = login.Role;
+
+                        return RedirectToAction("TeacherDashboard", "Teacher");
+                        TempData["success"] = "Login successfully ";
+                    }
                 }
+                TempData["error"] = "Login Failed !";
+                return RedirectToAction("Index", "LoginSignup");
+                
             }
             catch (Exception ex)
             {

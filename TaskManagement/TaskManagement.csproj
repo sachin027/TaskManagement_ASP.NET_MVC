@@ -144,6 +144,8 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="CustomFilter\CustomAuthorizeAttribute.cs" />
+    <Compile Include="CustomFilter\CustomStudentAuthorizeAttribute.cs" />
+    <Compile Include="CustomFilter\CustomTeacherAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -22,6 +22,8 @@ namespace TaskManagement.Helper.LoginSignupHelper
                     student.Password = signup.Password;
                     student.Address = signup.Address;
                     student.ContactNumber = signup.PhoneNumber;
+                    student.CityID = signup.CityID;
+                    student.StateID = signup.StateID;
                 }
                 return student;
 
@@ -45,6 +47,8 @@ namespace TaskManagement.Helper.LoginSignupHelper
                     teacher.Password = signup.Password;
                     teacher.Address = signup.Address;
                     teacher.ContactNumber = signup.PhoneNumber;
+                    teacher.StateID = signup.StateID;
+                    teacher.CityID = signup.CityID;
                 }
                 return teacher;
 
