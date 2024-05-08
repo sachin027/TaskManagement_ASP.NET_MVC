@@ -10,6 +10,7 @@ using TaskManagement.Repository.Services;
 
 namespace TaskManagement.Controllers
 {
+    [CustomAuthorize]
     public class StudentController : Controller
     {
         private readonly IAssignTask _assignTask;

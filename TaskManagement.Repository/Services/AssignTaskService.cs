@@ -96,8 +96,9 @@ namespace TaskManagement.Repository.Services
             {
                 Students _student = new Students();
                 _student = _DBContext.Students.FirstOrDefault(x=>x.Username==userName);
+                int id = _student.StudentID;
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.StudentID == id).ToList();
 
-                List<Assignment> _assignmentList = _DBContext.Assignment.ToList();
                 return _assignmentList;
             }
             catch (Exception ex)
