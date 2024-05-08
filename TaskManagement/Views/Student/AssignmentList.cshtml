@@ -1,0 +1,32 @@
+﻿@model List<TaskManagement.Models.DBContext.Assignment>
+@{
+    ViewBag.Title = "AssignmentList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>AssignMentList</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>TaskName</th>
+            <th>Description</th>
+            <th>DeadLine</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tasks.TaskName</td>
+                <td>@item.Tasks.Description</td>
+                <td>@item.Tasks.Deadline</td>
+                
+
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -10608,6 +10608,9 @@
     <Content Include="Views\LoginSignup\Teacher.cshtml" />
     <Content Include="Views\Student\StudentDashboard.cshtml" />
     <Content Include="Views\Teacher\TeacherDashboard.cshtml" />
+    <Content Include="Views\Teacher\AssignTask.cshtml" />
+    <Content Include="Views\Teacher\CreateTask.cshtml" />
+    <Content Include="Views\Student\AssignmentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

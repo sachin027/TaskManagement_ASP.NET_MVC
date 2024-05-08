@@ -46,6 +46,9 @@
     <Compile Include="LoginSignupHelper\LoginSignupHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateHelper\StateHelper.cs" />
+    <Compile Include="StudentHelper\StudentHelper.cs" />
+    <Compile Include="TaskHelper\TaskHelper.cs" />
+    <Compile Include="TeacherHelper\TeacherHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

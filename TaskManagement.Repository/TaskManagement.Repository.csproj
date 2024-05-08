@@ -49,12 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Interface\IAddTask.cs" />
+    <Compile Include="Interface\IAssignTask.cs" />
     <Compile Include="Interface\ICityInterface.cs" />
     <Compile Include="Interface\IStateInterface.cs" />
+    <Compile Include="Interface\ITeacherInterface.cs" />
     <Compile Include="Interface\IUserPanelInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AddTaskService.cs" />
+    <Compile Include="Services\AssignTaskService.cs" />
     <Compile Include="Services\CityService.cs" />
     <Compile Include="Services\StateService.cs" />
+    <Compile Include="Services\TeacherService.cs" />
     <Compile Include="Services\UserPanelService.cs" />
   </ItemGroup>
   <ItemGroup>
