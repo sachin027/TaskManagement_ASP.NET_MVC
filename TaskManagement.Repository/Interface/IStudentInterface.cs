@@ -8,6 +8,6 @@ namespace TaskManagement.Repository.Interface
 {
     public interface IStudentInterface
     {
-        bool AssignmentStatus(int id);
+       bool AssignmentStatus(int id);
     }
 }

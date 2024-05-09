@@ -30,10 +30,8 @@
                             <td>@item.Tasks.Teachers.Username</td>
                             <td>
                                 @if (item.status == false)
-                                {
-                                    <div>
-                                        <input type="checkbox" class="form-check-input" id="checkboxId" value="@item.AssignmentID" />Completed
-                                    </div> 
+                                 {
+                                    <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
                                  }
                                  else
                                  {
@@ -49,17 +47,3 @@
         <div class="card-footer"><a href="./StudentDashboard"> <button class="btn btn-warning">Back to HomePage</button></a></div>
     </div>
 </div>
-
-<script>
-    $('#checkboxId').on('click', function () {
-        var AssignmentId = $('#checkboxId').val()
-
-        $.ajax({
-            type: "GET",
-            url: "/Student/SetAssignmentStatus?id=" + AssignmentId,
-            success: true,
-        })
-        $('#checkboxId').hide()
-    })
-
-</script>

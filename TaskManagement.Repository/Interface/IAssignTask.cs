@@ -18,7 +18,7 @@ namespace TaskManagement.Repository.Interface
         /// <summary>
         /// Get task List
         /// </summary>
-        List<TaskModel> GetTaskList();
+        List<TaskModel> GetTaskList(string username);
 
         /// <summary>
         /// Assign Task
@@ -27,11 +27,15 @@ namespace TaskManagement.Repository.Interface
         bool AssignTaskToStudent(AssignmentModel assignment);
 
 
-        ///// <summary>
-        ///// Get Assignment List
-        ///// </summary>
+        /// <summary>
+        /// Get Assignment List
+        /// </summary>
 
         List<Assignment> GetAssignmentsListById(string userName);
+
+        ///<summary> Count total number of assignments
+
+        int TotalAssignments(string username);
 
     }
 }

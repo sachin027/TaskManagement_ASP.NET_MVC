@@ -35,13 +35,14 @@ namespace TaskManagement.Repository.Services
         /// <summary>
         /// Get task list of specific teacher
         /// </summary>
-        public List<TaskModel> GetTaskList()
+        public List<TaskModel> GetTaskList(string username)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
             try
             {
                 List<TaskModel> _taskList = new List<TaskModel>();
-                List<Tasks> task = _DBContext.Tasks.ToList();
+                List<Tasks> task = _DBContext.Tasks.Where(m => m.Teachers.Username == username).ToList();
+
                 _taskList = TaskHelper.GetTaskListByHelper(task);
                 return _taskList;
             }
@@ -90,6 +91,7 @@ namespace TaskManagement.Repository.Services
         /// <summary>
         /// Return all assign Task List by all teachers
         /// </summary>
+        
         public List<Assignment> GetAssignmentsListById(string userName)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -108,5 +110,27 @@ namespace TaskManagement.Repository.Services
             }
         }
 
+        ///<summary>Count assignment service
+        public int TotalAssignments(string username)
+        {
+            int TotalCount = 0;
+            Students students = new Students();
+            
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            students = _DBContext.Students.FirstOrDefault(u=>u.Username== username);
+            int id = students.StudentID;
+
+            try
+            {
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.StudentID == id).ToList();
+                TotalCount = _assignmentList.Count();
+                return TotalCount;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

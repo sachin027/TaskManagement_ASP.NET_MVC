@@ -72,7 +72,8 @@ namespace TaskManagement.Controllers
             ViewBag._studentlist = _studentList; 
 
             List<TaskModel> _taskList = new List<TaskModel>();
-            _taskList = _task.GetTaskList();
+            string username = SessionHelper.SessionHelper.Username;
+            _taskList = _task.GetTaskList(username);
             ViewBag._taskList = _taskList;
             
             return View();

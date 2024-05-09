@@ -25,6 +25,8 @@ namespace TaskManagement.Controllers
         // GET: Student
         public ActionResult StudentDashboard()
         {
+            string name = SessionHelper.SessionHelper.Username;
+            ViewBag.TotalAssignments = _assignTask.TotalAssignments(name);
             return View();
         }
 
