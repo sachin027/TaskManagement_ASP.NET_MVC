@@ -12,6 +12,7 @@ using TaskManagement.Repository.Services;
 namespace TaskManagement.Controllers
 {
     [CustomAuthorize]
+    [CustomTeacherAuthorize]
 
     public class TeacherController : Controller
     {
@@ -96,6 +97,17 @@ namespace TaskManagement.Controllers
                 throw ex;
             }
             
+        }
+
+        /// <summary>
+        /// Log out from dashboard and redirect to Login page - session  will end
+        /// </summary>
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            TempData["success"] = "Logout successfully ";
+            return RedirectToAction("Index", "LoginSignup");
         }
 
     }

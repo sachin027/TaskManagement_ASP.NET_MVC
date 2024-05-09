@@ -70,18 +70,38 @@ namespace TaskManagement.Repository.Services
 				if (user.Role == "Student")
 				{
 					Students st =  LoginSignupHelper.ConvertSignupStudentModelToSignup(user);
-					// var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
-					_DBContext.Students.Add(st);
-					_DBContext.SaveChanges();
-					return true;
+					var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
+                    if (!isEmailExist)
+                    {
+						_DBContext.Students.Add(st);
+						_DBContext.SaveChanges();
+						return true;
+                    }
+                    else
+                    {
+						return false;
+                    }
 				}
-				else
+				else if (user.Role == "Teacher")
 				{
 					Teachers teachers =  LoginSignupHelper.ConvertSignupTeacherModelToSignup(user);
-					_DBContext.Teachers.Add(teachers);
-					_DBContext.SaveChanges();
-					return true;
-				}
+					var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
+
+                    if (!isEmailExist)
+                    {
+						_DBContext.Teachers.Add(teachers);
+						_DBContext.SaveChanges();
+						return true;
+                    }
+                    else
+                    {
+						return false;
+                    }
+                }
+                else
+                {
+					return false;
+                }
 			}
 			catch (Exception ex)
 			{

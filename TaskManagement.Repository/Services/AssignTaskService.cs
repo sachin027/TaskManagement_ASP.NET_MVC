@@ -67,6 +67,7 @@ namespace TaskManagement.Repository.Services
                 {
                     int isCheckingSaveOrNot = 0;
                     assignment.StudentID = Convert.ToInt32(item);
+                    assignment.status = false;
                     _DBContext.Assignment.Add(assignment);
                     isCheckingSaveOrNot = _DBContext.SaveChanges();
 

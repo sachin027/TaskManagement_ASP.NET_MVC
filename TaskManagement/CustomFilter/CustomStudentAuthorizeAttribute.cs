@@ -11,7 +11,7 @@ namespace TaskManagement.CustomFilter
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if (SessionHelper.SessionHelper.Username != "" && SessionHelper.SessionHelper.Role != "Student")
+            if (SessionHelper.SessionHelper.Username != "" && SessionHelper.SessionHelper.Role == "Student")
             {
                 return true;
             }

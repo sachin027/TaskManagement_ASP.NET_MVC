@@ -14,5 +14,6 @@ namespace TaskManagement.Models.ViewModel
         public string[] StudentID { get; set; }
         public virtual Students Students { get; set; }
         public virtual Tasks Tasks { get; set; }
+        public Nullable<bool> status { get; set; }
     }
 }

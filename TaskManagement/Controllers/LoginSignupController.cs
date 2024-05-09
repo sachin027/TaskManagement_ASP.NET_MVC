@@ -37,40 +37,39 @@ namespace TaskManagement.Controllers.LoginSignup
         {
             try
             {
-                if(login.Role == "Student")
-                {
-                    bool isValidUser = _userPanel.Login(login);
-                    if (isValidUser)
+                    if (login.Username != null && login.Password!= null && login.Role == "Student")
                     {
-                        SessionHelper.SessionHelper.Username = login.Username;
-                        SessionHelper.SessionHelper.Role = login.Role;
+                        bool isValidUser = _userPanel.Login(login);
+                        if (isValidUser)
+                        {
+                            SessionHelper.SessionHelper.Username = login.Username;
+                            SessionHelper.SessionHelper.Role = login.Role;
 
-                        return RedirectToAction("StudentDashboard", "Student");
-                        TempData["success"] = "Login successfully ";
+                            TempData["success"] = "Login successfully ";
+                            return RedirectToAction("StudentDashboard", "Student");
+                        }
                     }
-                }
 
-                else if(login.Role == "Teacher")
-                {
-                    bool isValidUser = _userPanel.Login(login);
-                    if (isValidUser)
+                    else if (login.Username != null && login.Password != null && login.Role == "Teacher")
                     {
-                        SessionHelper.SessionHelper.Username = login.Username;
-                        SessionHelper.SessionHelper.Role = login.Role;
+                        bool isValidUser = _userPanel.Login(login);
+                        if (isValidUser)
+                        {
+                            SessionHelper.SessionHelper.Username = login.Username;
+                            SessionHelper.SessionHelper.Role = login.Role;
 
-                        return RedirectToAction("TeacherDashboard", "Teacher");
-                        TempData["success"] = "Login successfully ";
+                            TempData["success"] = "Login successfully ";
+                            return RedirectToAction("TeacherDashboard", "Teacher");
+                        }
                     }
-                }
-                    TempData["error"] = "Login Failed !";
-                    return RedirectToAction("Index", "LoginSignup");
-
                 
+                TempData["error"] = "Login Failed !";
+                return View("Index");
+
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                return RedirectToAction("Index", "LoginSignup");
             }
         }
 
@@ -85,21 +84,24 @@ namespace TaskManagement.Controllers.LoginSignup
         {
             try
             {
-                if (_userPanel.Signup(signup) == true)
+                if (ModelState.IsValid)
                 {
-                    TempData["success"] = "Register successfully ";
-                    return View("Index");
+                    if ( _userPanel.Signup(signup) == true )
+                    {
+                        TempData["success"] = "Register successfully ";
+                        return View("Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "EmailId already exist");
+                        return View();
+                    }
                 }
-                else
-                {
-                    return View();
-
-                }
+                return View();
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                return View("RegistrationPage");
             }
         }
 
