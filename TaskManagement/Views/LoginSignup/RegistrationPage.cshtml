@@ -16,7 +16,7 @@
                     <div class="w-100">
                         <h3 class="mb-4">Registration Form</h3>
                     </div>
-                    <form method="post">
+                    <form method="post" id="registerForm">
 
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Select role</label>
@@ -25,6 +25,7 @@
                                 <option value="Student">Student</option>
                                 <option value="Teacher">Teacher</option>
                             </select>
+                            @Html.ValidationMessageFor(m => m.Role, "Role must be selected", new { @class = "text-danger" })
                         </div>
                         <div class="row ">
                             <div class="form-group mb-3 col-lg-4">
@@ -57,29 +58,27 @@
                             </div>
 
                             @* State and city dropdown start here *@
-                            <div class="form-group col-lg-4">
-                                <label for="exampleFormControlSelect1">State</label>
-                                <select name="StateId" id="StateId" class="form-control" aria-label="Default select example">
-                                    <option value="Select" class="form-select" selected>Select State</option>
-                                    @*@foreach (var item in ViewBag.States)
-                                    {
-                                <option value="@item.StateID">@item.StateName</option>}*@
-                                    @if (ViewBag.States != null)
+                        <div class="form-group col-lg-4">
+                            <label for="exampleFormControlSelect1">State</label>
+                            <select name="StateId" id="StateId" class="form-control" aria-label="Default select example">
+                                <option value="" class="form-select" selected>Select State</option>
+                                @if (ViewBag.States != null)
 
+                                {
+                                    foreach (var item in ViewBag.States)
                                     {
-                                        foreach (var item in ViewBag.States)
-                                        {
-                                            <option value="@item.StateID">@item.StateName</option>
-                                        }
+                        <option value="@item.StateID">@item.StateName</option>}
                                     }
-                                </select>
-                            </div>
-                            <div class=" form-group col-lg-4">
-                                <label for="exampleFormControlSelect1">City</label>
-                                <select name="CityId" id="CityID" class="form-control" class="form-select" aria-label="Default select example">
-                                    <option value="1" selected>Select City</option>
-                                </select>
-                            </div>
+                            </select>
+                            @Html.ValidationMessageFor(m => m.StateID , "" , new { @class = "text-danger"})
+                        </div>
+                        <div class=" form-group col-lg-4">
+                            <label for="exampleFormControlSelect1">City</label>
+                            <select name="CityId" id="CityID" class="form-control" class="form-select" aria-label="Default select example">
+                                <option value="" selected>Select City</option>
+                            </select>
+                            @Html.ValidationMessageFor(m => m.CityID, "City must be selected", new { @class = "text-danger" })
+                        </div>
                             @* State and city dropdown end here *@
 
                         </div>
@@ -136,18 +135,21 @@
 <script>
         $(document).ready(function () {
             $('#StateId').on('change', function () {
-                $('#CityID').html('<option value="Select">Select City</option>');
+                $('#CityID').html('<option value="Select" >Select City</option>');
                 var StateId = document.getElementById('StateId').value;
                 $.ajax({
                     type: "GET",
                     url: "/LoginSignup/CitiesByState?id=" + StateId,
                     success: function (data) {
-                        console.log(data)
                         ChangeCityDropdown(data)
                     }
 
                 });
             })
+
+            $(function () {
+                $("#registerForm").validate();
+            }); 
         })
 
 </script>

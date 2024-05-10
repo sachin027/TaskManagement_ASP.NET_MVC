@@ -25,7 +25,6 @@ namespace TaskManagement.Repository.Services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

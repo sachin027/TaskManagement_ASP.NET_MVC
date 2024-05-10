@@ -29,6 +29,11 @@ namespace TaskManagement.Controllers
         // GET: Teacher
         public ActionResult TeacherDashboard()
         {
+            string name = SessionHelper.SessionHelper.Username;
+            ViewBag.TotalCreatedTaskByTeacher = _task.TotalCreatedTaskByTeacher(name);
+            ViewBag.TotalTaskAssignToStudent = _task.TotalTaskAssignedToStudent(name);
+            ViewBag.TotalCompletedTaskByStudent = _task.TotalCompletedTaskByStudent(name);
+            ViewBag.TotalPendingTaskByStudent = _task.TotalPendingTaskByStudent(name);
             return View();
         }
 
@@ -46,7 +51,7 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                if(customTaskModel != null)
+                if(customTaskModel != null && ModelState.IsValid)
                 {
                     _addTask.AddTask(customTaskModel);
                     return RedirectToAction("TeacherDashboard");

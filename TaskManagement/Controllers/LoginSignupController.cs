@@ -88,15 +88,18 @@ namespace TaskManagement.Controllers.LoginSignup
                 {
                     if ( _userPanel.Signup(signup) == true )
                     {
+                        ModelState.Clear();
                         TempData["success"] = "Register successfully ";
                         return View("Index");
                     }
                     else
                     {
+                        ViewBag.States = _state.StateModelList();
                         ModelState.AddModelError("Email", "EmailId already exist");
                         return View();
                     }
                 }
+                ViewBag.States = _state.StateModelList();
                 return View();
             }
             catch (Exception ex)

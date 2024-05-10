@@ -31,7 +31,7 @@ namespace TaskManagement.SessionHelper
             }
         }
 
-        public static string UserId
+        public static int UserId
         {
             set
             {
@@ -39,7 +39,7 @@ namespace TaskManagement.SessionHelper
             }
             get
             {
-                return HttpContext.Current.Session["UserId"] == null ? "" : (string)HttpContext.Current.Session["UserId"];
+                return HttpContext.Current.Session["UserId"] == null ? 0 : (int)HttpContext.Current.Session["UserId"];
             }
         }
     }

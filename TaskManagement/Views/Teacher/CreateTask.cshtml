@@ -8,14 +8,14 @@
     <div class="card mx-auto mt-5" style="width:80%">
         <div class="card-header"><h2 class=" text-success">Create Task</h2></div>
         <div class="card-body">
-            @using (Html.BeginForm("CreateTask", "Teacher", FormMethod.Post))
+            @using (Html.BeginForm("CreateTask", "Teacher", FormMethod.Post , new { @class= "was-validated"}))
             {
 
                 <input type="text" name="CreatorID" value=@ViewBag.TeacherId hidden />
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.TaskName)
-                        @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" , @required="required"})
                         @Html.ValidationMessageFor(m => m.TaskName)
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.Deadline)
-                        <input type="date" name="Deadline" class="form-control" />
+                        <input type="date" name="Deadline" class="form-control deadline" required/>
                         @Html.ValidationMessageFor(m => m.Deadline)
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.Description)
-                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @required = "required" })
                         @Html.ValidationMessageFor(m => m.Description)
                     </div>
                 </div>
@@ -44,3 +44,6 @@
 
     </div>
 </div>
+<script>
+    $('.deadline').prop('min', new Date().toLocaleDateString('en-CA'));
+</script>

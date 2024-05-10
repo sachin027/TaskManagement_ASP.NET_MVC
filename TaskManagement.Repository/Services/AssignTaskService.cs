@@ -13,9 +13,7 @@ namespace TaskManagement.Repository.Services
 {
     public class AssignTaskService : IAssignTask
     {
-        /// <summary>
-        /// Get student List for assign task
-        /// </summary>
+        /// <summary>  Get student List for assign task
         public List<StudentModel> GetStudentList()
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -32,9 +30,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary>
-        /// Get task list of specific teacher
-        /// </summary>
+        /// <summary> Get task list of specific teacher
         public List<TaskModel> GetTaskList(string username)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -52,9 +48,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary>
-        /// Assign task to particular selected students
-        /// </summary>
+        /// <summary> Assign task to particular selected students
 
         public bool AssignTaskToStudent(AssignmentModel assignmentModel)
         {
@@ -88,9 +82,7 @@ namespace TaskManagement.Repository.Services
         }
 
 
-        /// <summary>
-        /// Return all assign Task List by all teachers
-        /// </summary>
+        /// <summary> Return all assign Task List by all teachers
         
         public List<Assignment> GetAssignmentsListById(string userName)
         {
@@ -110,25 +102,99 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        ///<summary>Count assignment service
-        public int TotalAssignments(string username)
+        /// <summary> Get Total Number of Created Assignment by Teacher
+        public int TotalCreatedTaskByTeacher(string username)
         {
-            int TotalCount = 0;
-            Students students = new Students();
-            
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
-            students = _DBContext.Students.FirstOrDefault(u=>u.Username== username);
-            int id = students.StudentID;
-
             try
             {
-                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.StudentID == id).ToList();
-                TotalCount = _assignmentList.Count();
-                return TotalCount;
+                int TotalCreatedTask = 0;
+                List<Tasks> _taskList = _DBContext.Tasks.Where(m => m.Teachers.Username == username).ToList();
+
+                if(_taskList != null)
+                {
+                    TotalCreatedTask = _taskList.Count();
+                }
+                 return TotalCreatedTask;
+
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
 
+        /// <summary> Get Total Number of Task Assigned Students
+        public int TotalTaskAssignedToStudent(string username)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                int TotalTaskAssignToStudent = 0;
+                Teachers teachers = _DBContext.Teachers.Where(x => x.Username == username).FirstOrDefault();
+                int TeacherId = Convert.ToInt32( teachers.TeacherID);
+
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(m=>m.Tasks.CreatorID == TeacherId).ToList();
+
+                if (_assignmentList != null)
+                {
+                    TotalTaskAssignToStudent = _assignmentList.Count();
+                }
+                return TotalTaskAssignToStudent;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary> Get Total Number of Task Complete by Students
+        public int TotalCompletedTaskByStudent(string username)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                int TotalCompletedTaskByStudent = 0;
+                Teachers teachers = _DBContext.Teachers.Where(x => x.Username == username).FirstOrDefault();
+                int TeacherId = Convert.ToInt32(teachers.TeacherID);
+
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(m => m.Tasks.CreatorID == TeacherId && m.status == true).ToList();
+
+                if (_assignmentList != null)
+                {
+                    TotalCompletedTaskByStudent = _assignmentList.Count();
+                }
+                return TotalCompletedTaskByStudent;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary> Get Total Number of Task Pending by Students
+        public int TotalPendingTaskByStudent(string username)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                int TotalPendingTaskByStudent = 0;
+                Teachers teachers = _DBContext.Teachers.Where(x => x.Username == username).FirstOrDefault();
+                int TeacherId = Convert.ToInt32(teachers.TeacherID);
+
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(m => m.Tasks.CreatorID == TeacherId && m.status == false).ToList();
+
+                if (_assignmentList != null)
+                {
+                    TotalPendingTaskByStudent = _assignmentList.Count();
+                }
+                return TotalPendingTaskByStudent;
+
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

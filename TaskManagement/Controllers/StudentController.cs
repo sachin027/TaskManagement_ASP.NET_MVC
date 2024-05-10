@@ -26,7 +26,9 @@ namespace TaskManagement.Controllers
         public ActionResult StudentDashboard()
         {
             string name = SessionHelper.SessionHelper.Username;
-            ViewBag.TotalAssignments = _assignTask.TotalAssignments(name);
+            ViewBag.TotalAssignments = _studentInterface.TotalAssignments(name);
+            ViewBag.TotalCompletedAssignment = _studentInterface.TotalCompletedAssignment(name);
+            ViewBag.TotalPendingAssignment = _studentInterface.TotalPendingAssignment(name);
             return View();
         }
 
@@ -38,9 +40,7 @@ namespace TaskManagement.Controllers
         }
 
 
-        /// <summary>
-        /// Log out from dashboard and redirect to Login page - session  will end
-        /// </summary>
+        /// <summary>  Log out from dashboard and redirect to Login page - session  will end
 
         public ActionResult Logout()
         {
@@ -50,9 +50,7 @@ namespace TaskManagement.Controllers
         }
 
 
-        ///<summary>
-        ///Update assignment status
-        /// </summary>
+        ///<summary> Update assignment status
         public ActionResult SetAssignmentStatus(int id)
         {
 
@@ -65,5 +63,7 @@ namespace TaskManagement.Controllers
 
             return RedirectToAction("AssignmentList");
         }
+
+
     }
 }

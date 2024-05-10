@@ -18,6 +18,7 @@ namespace TaskManagement.Models.ViewModel
         public int TaskID { get; set; }
         public string TaskName { get; set; }
         public string Description { get; set; }
+        
         public Nullable<System.DateTime> Deadline { get; set; }
         public Nullable<int> CreatorID { get; set; }
 
@@ -25,4 +26,5 @@ namespace TaskManagement.Models.ViewModel
         public virtual ICollection<Assignment> Assignment { get; set; }
         public virtual Teachers Teachers { get; set; }
     }
+
 }
