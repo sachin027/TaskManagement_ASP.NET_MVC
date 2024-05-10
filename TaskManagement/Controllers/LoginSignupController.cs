@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskManagement.CustomFilter;
 using TaskManagement.Models;
 using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface;
@@ -95,7 +96,8 @@ namespace TaskManagement.Controllers.LoginSignup
                     else
                     {
                         ViewBag.States = _state.StateModelList();
-                        ModelState.AddModelError("Email", "EmailId already exist");
+                        ModelState.AddModelError("Email", "Email I'd already exist");
+                        TempData["error"] = "Something went wrong ! ";
                         return View();
                     }
                 }

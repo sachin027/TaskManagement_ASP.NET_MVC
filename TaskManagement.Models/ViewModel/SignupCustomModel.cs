@@ -12,16 +12,17 @@ namespace TaskManagement.Models.ViewModel
         public int UserId { get; set; }
 
         [Required]
-        [MaxLength(6, ErrorMessage = "Maximum 6 characters allowed")]
-        [MinLength(4, ErrorMessage = "Minimum 4 characters should be entered")]
+        [MaxLength(8, ErrorMessage = "Maximum 8 characters allowed")]
+        [MinLength(4, ErrorMessage = "Minimum 4 characters should be entered")]                                                    
         public string Username { get; set; }
 
         [Required]
         [MaxLength(6 , ErrorMessage ="Password length should be 6 digit")]
         public string Password { get; set; }
 
-        // [Required]
-        // public string ConfirmPassword { get; set; }
+        [Required]
+        [Compare("Password", ErrorMessage = "Password is not identical")]
+        public string ConfirmPassword { get; set; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9_.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email id.")]

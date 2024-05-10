@@ -30,13 +30,20 @@
                             <td>@item.Tasks.Teachers.Username</td>
                             <td>
                                 @if (item.status == false)
-                                 {
-                                    <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                                {
+                                    if(@item.Tasks.Deadline > DateTime.Now)
+                                     {
+                                        <div><a class=" btn btn-warning" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                                     }
+                                    else
+                                    {
+                                        <button class="btn btn-danger">Deadline over</button>
+                                    }
                                  }
-                                 else
-                                 {
-                                    <div>Submitted</div>
-                                 }
+                                else
+                                {
+                                    <button class="btn btn-success">Submitted</button>
+                                }
                             </td>
                         </tr>
                     }

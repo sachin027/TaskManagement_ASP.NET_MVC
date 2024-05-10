@@ -132,6 +132,7 @@
                         <ul aria-expanded="false">
                             <li>@Html.ActionLink("Create Task", "CreateTask")</li>
                             <li>@Html.ActionLink("Assign Task", "AssignTask")</li>
+                            <li>@Html.ActionLink("Task List", "TaskList")</li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                     </li>
@@ -151,10 +152,12 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-1">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Total Created Task</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">@ViewBag.TotalCreatedTaskByTeacher</h2>
-                                </div>
+                                <a href="./TaskList">
+                                    <h3 class="card-title text-white">Total Created Task</h3>
+                                    <div class="d-inline-block">
+                                        <h2 class="text-white">@ViewBag.TotalCreatedTaskByTeacher</h2>
+                                    </div>
+                                </a>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-file-code-o"></i></span>
                             </div>
                         </div>

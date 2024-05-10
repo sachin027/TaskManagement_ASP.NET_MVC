@@ -15,5 +15,6 @@ namespace TaskManagement.Repository.Interface
 
         //Signup interface 
         bool Signup(SignupCustomModel user);
+
     }
 }

@@ -54,10 +54,12 @@ namespace TaskManagement.Controllers
                 if(customTaskModel != null && ModelState.IsValid)
                 {
                     _addTask.AddTask(customTaskModel);
+                    TempData["success"] = "Task added successfully";
                     return RedirectToAction("TeacherDashboard");
                 }
                 else
                 {
+                    TempData["error"] = "Something went wrong";
                     return View("CreateTask");
                 }
             }
@@ -93,21 +95,29 @@ namespace TaskManagement.Controllers
 
                 if (isSaving)
                 {
+                    TempData["success"] = "Task assign successfully";
                     return RedirectToAction("TeacherDashboard");
                 }
+                TempData["error"] = "Something wrong";
                 return View();
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             
         }
 
-        /// <summary>
-        /// Log out from dashboard and redirect to Login page - session  will end
-        /// </summary>
+
+        public ActionResult TaskList()
+        {
+            List<TaskModel> _taskList = new List<TaskModel>();
+            string username = SessionHelper.SessionHelper.Username;
+            _taskList = _task.GetTaskList(username);
+            return View(_taskList);
+        }
+
+        /// <summary> Log out from dashboard and redirect to Login page - session  will end
 
         public ActionResult Logout()
         {
