@@ -14,5 +14,6 @@ namespace TaskManagement.Repository.Interface
         /// Add task interface
         /// </summary>
         Tasks AddTask(TaskModel _taskModel);
+
     }
 }

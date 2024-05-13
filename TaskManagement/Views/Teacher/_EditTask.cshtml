@@ -1,0 +1,35 @@
+﻿@model TaskManagement.Models.DBContext.Tasks
+@using (Html.BeginForm("CreateTask", "Teacher", FormMethod.Post, new { @class = "was-validated ", }))
+{
+    <input type="text" name="CreatorID" value=@ViewBag.TeacherId hidden />
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            @Html.LabelFor(m => m.TaskName)
+            @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", @required = "required", id = "taskName" })
+            @Html.ValidationMessageFor(m => m.TaskName)
+
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            @Html.LabelFor(m => m.Deadline)
+            @Html.TextBoxFor(m=>m.Deadline,"{0:yyyy-MM-dd}",new {@class= "form-control deadline", type="date" })
+            @*<input type="date" name="Deadline" id="deadline" class="form-control deadline" required />*@
+            @Html.ValidationMessageFor(m => m.Deadline)
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @required = "required", id = "description" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+
+    <input type="submit" name="submit" class="btn btn-outline-success" />
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+}
+
+

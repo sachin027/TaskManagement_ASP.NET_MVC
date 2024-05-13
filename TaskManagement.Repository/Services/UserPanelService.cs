@@ -71,7 +71,8 @@ namespace TaskManagement.Repository.Services
 				{
 					Students st =  LoginSignupHelper.ConvertSignupStudentModelToSignup(user);
 					var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
-                    if (!isEmailExist)
+					var isUserNameExist = _DBContext.Students.Any(x => x.Username == user.Username);
+                    if (!isEmailExist && !isUserNameExist)
                     {
 						_DBContext.Students.Add(st);
 						_DBContext.SaveChanges();
@@ -85,9 +86,9 @@ namespace TaskManagement.Repository.Services
 				else if (user.Role == "Teacher")
 				{
 					Teachers teachers =  LoginSignupHelper.ConvertSignupTeacherModelToSignup(user);
-					var isEmailExist = _DBContext.Students.Any(x => x.Email == user.Email);
-
-                    if (!isEmailExist)
+					var isEmailExist = _DBContext.Teachers.Any(x => x.Email == user.Email);
+					var isUserNameExist = _DBContext.Teachers.Any(x => x.Username == user.Username);
+					if (!isEmailExist && !isUserNameExist)
                     {
 						_DBContext.Teachers.Add(teachers);
 						_DBContext.SaveChanges();

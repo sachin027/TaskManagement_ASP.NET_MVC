@@ -16,6 +16,8 @@ namespace TaskManagement.Controllers
 
     public class TeacherController : Controller
     {
+        TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+
         private readonly IAssignTask _task;
         private readonly IAddTask _addTask;
         private readonly ITeacherInterface _teacherInterface;
@@ -108,7 +110,7 @@ namespace TaskManagement.Controllers
             
         }
 
-
+        /// <summary> redirect to all task list page which created by teacher .
         public ActionResult TaskList()
         {
             List<TaskModel> _taskList = new List<TaskModel>();
@@ -118,7 +120,6 @@ namespace TaskManagement.Controllers
         }
 
         /// <summary> Log out from dashboard and redirect to Login page - session  will end
-
         public ActionResult Logout()
         {
             Session.Clear();
@@ -126,5 +127,39 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Index", "LoginSignup");
         }
 
+
+        ///<summary> edit Task 
+        public ActionResult Edit(int? id)
+        {
+            Tasks _task =  _DBContext.Tasks.FirstOrDefault(m => m.TaskID == id);
+            
+            
+            return PartialView("_EditTask", _task);
+        }
+
     }
 }
+
+//$(document).on('click', '.edit', function() {
+//    $('#Formbody').empty();
+//    var id = $(this).data('id');
+//    console.log(id);
+//    $.ajax({
+//    method: "GET",
+//        url: "/Main/editpartial/" + id,
+//        processData: false,
+//        contentType: false,
+//        success: function(data) {
+//            $('#Formbody').append(data);
+//            $("#staticBackdropLabel").text("Your Details");
+//            $('#staticBackdrop').modal('show');
+//            //$.validator.unobtrusive.parse($("#myform"));
+//            console.log('Success');
+//            table.draw();
+//        },
+//        error: function(request, status, error) {
+//            alert(request.responseText);
+//            console.log("Error")
+//        }
+//    })
+//})

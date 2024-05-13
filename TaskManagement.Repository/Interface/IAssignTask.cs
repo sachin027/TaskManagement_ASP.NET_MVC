@@ -17,12 +17,9 @@ namespace TaskManagement.Repository.Interface
         List<TaskModel> GetTaskList(string username);
 
         /// <summary> Assign Task
-
         bool AssignTaskToStudent(AssignmentModel assignment);
 
-
         /// <summary>  Get Assignment List
-
         List<Assignment> GetAssignmentsListById(string userName);
 
         /// <summary> Get Total Number of Created Assignment by Teacher

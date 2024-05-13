@@ -39,16 +39,13 @@ namespace TaskManagement.Controllers
             return View(_assignments);
         }
 
-
         /// <summary>  Log out from dashboard and redirect to Login page - session  will end
-
         public ActionResult Logout()
         {
             Session.Clear();
             TempData["success"] = "Logout successfully ";
             return RedirectToAction("Index" , "LoginSignup");
         }
-
 
         ///<summary> Update assignment status
         public ActionResult SetAssignmentStatus(int id)
@@ -64,6 +61,14 @@ namespace TaskManagement.Controllers
             return RedirectToAction("AssignmentList");
         }
 
+        ///<summary> Return a Partial viewn for details
+        public ActionResult Details(int id)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            Assignment _Assignment = new Assignment();
 
+            _Assignment = _DBContext.Assignment.Find(id);
+            return PartialView("Details", _Assignment);
+        }
     }
 }

@@ -14,9 +14,9 @@
                 <thead class="text-black bg-light">
                     <tr>
                         <th>TaskName</th>
-                        <th>Description</th>
                         <th>DeadLine</th>
                         <th>Teacher Name</th>
+                        <th>Details</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -25,21 +25,27 @@
                     {
                         <tr>
                             <td>@item.Tasks.TaskName</td>
-                            <td>@item.Tasks.Description</td>
                             <td>@item.Tasks.Deadline</td>
                             <td>@item.Tasks.Teachers.Username</td>
                             <td>
+
+                                <button class="btn btn-info " onclick="openModal(@item.AssignmentID)">Details</button>
+                                <div id="myModalContent">
+                                </div>
+
+                            </td>
+                            <td>
                                 @if (item.status == false)
                                 {
-                                    if(@item.Tasks.Deadline > DateTime.Now)
-                                     {
+                                    if (@item.Tasks.Deadline > DateTime.Now)
+                                    {
                                         <div><a class=" btn btn-warning" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
-                                     }
+                                    }
                                     else
                                     {
                                         <button class="btn btn-danger">Deadline over</button>
                                     }
-                                 }
+                                }
                                 else
                                 {
                                     <button class="btn btn-success">Submitted</button>
@@ -54,3 +60,20 @@
         <div class="card-footer"><a href="./StudentDashboard"> <button class="btn btn-warning">Back to HomePage</button></a></div>
     </div>
 </div>
+
+    <script>
+
+        function openModal(id) {
+            $.ajax({
+                method: "GET",
+                url: '/Student/Details/' + id,
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+    </script>

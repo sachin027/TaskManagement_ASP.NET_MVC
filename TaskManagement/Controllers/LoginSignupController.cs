@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TaskManagement.CustomFilter;
 using TaskManagement.Models;
+using TaskManagement.Models.DBContext;
 using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface;
 using TaskManagement.Repository.Services;
@@ -38,13 +39,19 @@ namespace TaskManagement.Controllers.LoginSignup
         {
             try
             {
-                    if (login.Username != null && login.Password!= null && login.Role == "Student")
+                    if (login.Username != null && login.Password!= null && login.Role == "Student" )
                     {
                         bool isValidUser = _userPanel.Login(login);
                         if (isValidUser)
                         {
                             SessionHelper.SessionHelper.Username = login.Username;
+
                             SessionHelper.SessionHelper.Role = login.Role;
+                            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+                            Students _student =  _DBContext.Students.FirstOrDefault(x => x.Username == login.Username);
+                            int id = _student.StudentID;
+
+                            SessionHelper.SessionHelper.UserId = id;
 
                             TempData["success"] = "Login successfully ";
                             return RedirectToAction("StudentDashboard", "Student");
@@ -58,7 +65,11 @@ namespace TaskManagement.Controllers.LoginSignup
                         {
                             SessionHelper.SessionHelper.Username = login.Username;
                             SessionHelper.SessionHelper.Role = login.Role;
+                            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+                            Teachers _teacher = _DBContext.Teachers.FirstOrDefault(x => x.Username == login.Username);
+                            int id = _teacher.TeacherID;
 
+                            SessionHelper.SessionHelper.UserId = id;
                             TempData["success"] = "Login successfully ";
                             return RedirectToAction("TeacherDashboard", "Teacher");
                         }
@@ -97,6 +108,7 @@ namespace TaskManagement.Controllers.LoginSignup
                     {
                         ViewBag.States = _state.StateModelList();
                         ModelState.AddModelError("Email", "Email I'd already exist");
+                        ModelState.AddModelError("Username", "Username already exist");
                         TempData["error"] = "Something went wrong ! ";
                         return View();
                     }

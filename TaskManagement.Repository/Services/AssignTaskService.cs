@@ -49,7 +49,6 @@ namespace TaskManagement.Repository.Services
         }
 
         /// <summary> Assign task to particular selected students
-
         public bool AssignTaskToStudent(AssignmentModel assignmentModel)
         {
             try
@@ -81,9 +80,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-
-        /// <summary> Return all assign Task List by all teachers
-        
+        /// <summary> Return all assign Task List by all teachers     
         public List<Assignment> GetAssignmentsListById(string userName)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();

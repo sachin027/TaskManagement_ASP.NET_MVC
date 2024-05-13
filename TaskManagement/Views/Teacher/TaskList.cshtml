@@ -1,6 +1,46 @@
 ﻿@model List<TaskManagement.Models.ViewModel.TaskModel>
 
+<div id="myModalContent">
 
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <!--<div class="modal-header">
+                     <h4 class="modal-title">Task Details</h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 </div>
+
+                 <!-- Modal body -->
+                <div class="modal-body myForm">
+
+                    <div class="container-fluid">
+                        <div class="card mx-auto mt-5" style="width:80%">
+                            <div class="card-header"><h2 class=" text-success">Create Task</h2></div>
+                            <div class="card-body">
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <script>
+                        $('.deadline').prop('min', new Date().toLocaleDateString('en-CA'));
+                    </script>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="container-fluid">
     <div class="card mx-auto mt-5" style="width:80%">
 
@@ -13,6 +53,8 @@
                         <th>TaskName</th>
                         <th>Description</th>
                         <th>DeadLine</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +64,17 @@
                             <td>@item.TaskName</td>
                             <td>@item.Description</td>
                             <td>@item.Deadline</td>
+                            <td>
+                                <button class="btn btn-success" onclick="editForm(@item.TaskID)" type="button">
+                                    Edit
+                                </button>
+
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="deleteForm(@item.TaskID)" type="button">
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -32,3 +85,21 @@
     </div>
 
 
+    <script>
+        function editForm(id) {
+            $('.myForm').empty();
+            console.log("click")
+            $.ajax({
+                method: "GET",
+                url: '/Teacher/Edit?id=' + id,
+                success: function (data) {
+                    console.log(id);
+                    $(".myForm").append(data);
+                    $("#myModal").modal("show");
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+    </script>

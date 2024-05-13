@@ -13,6 +13,7 @@ namespace TaskManagement.Repository.Services
     public class AddTaskService : IAddTask
     {
         TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+        /// <summary> Add Task 
         public Tasks AddTask(TaskModel task)
         {
             try
@@ -29,5 +30,7 @@ namespace TaskManagement.Repository.Services
                 throw ex;
             }
         }
+
+
     }
 }
