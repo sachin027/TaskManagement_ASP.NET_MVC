@@ -74,10 +74,10 @@ namespace TaskManagement.Controllers
 
 
         ///Assign task to students
-        public ActionResult AssignTask()
+        public ActionResult AssignTask(int id)
         {
             List<StudentModel> _studentList = new List<StudentModel>();
-            _studentList = _task.GetStudentList();
+            _studentList = _task.GetStudentListById(id);
             ViewBag._studentlist = _studentList; 
 
             List<TaskModel> _taskList = new List<TaskModel>();
@@ -85,7 +85,7 @@ namespace TaskManagement.Controllers
             _taskList = _task.GetTaskList(username);
             ViewBag._taskList = _taskList;
             
-            return View();
+            return View("AssignTask" );
         }
 
         [HttpPost]
@@ -93,12 +93,15 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                bool isSaving = _task.AssignTaskToStudent(assignmentModel);
-
-                if (isSaving)
+                if (ModelState.IsValid)
                 {
-                    TempData["success"] = "Task assign successfully";
-                    return RedirectToAction("TeacherDashboard");
+                    bool isSaving = _task.AssignTaskToStudent(assignmentModel);
+
+                    if (isSaving) //error : use of unsugned local variable
+                    {
+                        TempData["success"] = "Task assign successfully";
+                        return RedirectToAction("TeacherDashboard");
+                    }
                 }
                 TempData["error"] = "Something wrong";
                 return View();
@@ -107,7 +110,7 @@ namespace TaskManagement.Controllers
             {
                 throw ex;
             }
-            
+          
         }
 
         /// <summary> redirect to all task list page which created by teacher .
@@ -118,6 +121,14 @@ namespace TaskManagement.Controllers
             _taskList = _task.GetTaskList(username);
             return View(_taskList);
         }
+
+        //public ActionResult CompletedStudentList()
+        //{
+        //    int id = SessionHelper.SessionHelper.UserId;
+        //    List<Assignment> assignmentModels = new List<Assignment>();
+        //    assignmentModels = _task.TotalCompletedTaskByStudentList(id);
+        //    return View(assignmentModels);
+        //}
 
         /// <summary> Log out from dashboard and redirect to Login page - session  will end
         public ActionResult Logout()
@@ -132,34 +143,10 @@ namespace TaskManagement.Controllers
         public ActionResult Edit(int? id)
         {
             Tasks _task =  _DBContext.Tasks.FirstOrDefault(m => m.TaskID == id);
-            
-            
             return PartialView("_EditTask", _task);
         }
 
+       
     }
 }
 
-//$(document).on('click', '.edit', function() {
-//    $('#Formbody').empty();
-//    var id = $(this).data('id');
-//    console.log(id);
-//    $.ajax({
-//    method: "GET",
-//        url: "/Main/editpartial/" + id,
-//        processData: false,
-//        contentType: false,
-//        success: function(data) {
-//            $('#Formbody').append(data);
-//            $("#staticBackdropLabel").text("Your Details");
-//            $('#staticBackdrop').modal('show');
-//            //$.validator.unobtrusive.parse($("#myform"));
-//            console.log('Success');
-//            table.draw();
-//        },
-//        error: function(request, status, error) {
-//            alert(request.responseText);
-//            console.log("Error")
-//        }
-//    })
-//})

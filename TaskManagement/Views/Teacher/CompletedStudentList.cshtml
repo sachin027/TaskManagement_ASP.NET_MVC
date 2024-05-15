@@ -1,0 +1,31 @@
+﻿@Model List<TaskManagement.Models.DBContext.Assignment>;
+
+
+<div class="container-fluid">
+    <div class="card mx-auto mt-5" style="width:80%">
+        <div class="card-header"><h2 class=" text-success">Assignment List</h2></div>
+        <div class="card-body">
+            <table class="table table-striped table-bordered table-success table-hover">
+                <thead class="text-black bg-light">
+                    <tr>
+                        <th>TaskName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach (var assignment in Model)
+                        {
+                        <tr>
+                            <td>@assignment.TaskName</td>
+                            <!-- Add other columns here -->
+                        </tr>
+                    }
+
+                    </tbody>
+            </table>
+
+        </div>
+        <div class="card-footer">
+            @Html.ActionLink("Back to HomePage", "TeacherDashboard", new { Controller = "Teacher" }, new { @class = "btn btn-outline-warning" })
+        </div>
+    </div>
+</div>

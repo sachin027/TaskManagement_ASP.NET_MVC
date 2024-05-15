@@ -10614,6 +10614,7 @@
     <Content Include="Views\Teacher\TaskList.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Teacher\_EditTask.cshtml" />
+    <Content Include="Views\Teacher\CompletedStudentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

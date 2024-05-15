@@ -75,7 +75,6 @@ namespace TaskManagement.Repository.Services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -171,6 +170,28 @@ namespace TaskManagement.Repository.Services
             }
         }
 
+        /// <summary> Get List of Task Complete by Students
+        //public List<Assignment> TotalCompletedTaskByStudentList(int id)
+        //{
+        //    try
+        //    {
+        //        TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+        //        List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== true).ToList();
+        //        if(_assignmentList != null)
+        //        {
+        //            return _assignmentList;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
         /// <summary> Get Total Number of Task Pending by Students
         public int TotalPendingTaskByStudent(string username)
         {
@@ -192,6 +213,24 @@ namespace TaskManagement.Repository.Services
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+
+        /// <summary>Get Student List of those who have not received any Task
+        public List<StudentModel> GetStudentListById(int id)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                List<StudentModel> _studentList = new List<StudentModel>();
+                List<Students> student = _DBContext.Students.Where(x => !x.Assignment.Any(y => y.TaskID == id)).ToList();
+                _studentList = StudentHelper.GetStudentListByHelper(student);
+                return _studentList;
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }
