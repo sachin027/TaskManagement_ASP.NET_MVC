@@ -32,10 +32,27 @@ namespace TaskManagement.Controllers
             return View();
         }
 
+        ///<summary> Total Assignment List
         public ActionResult AssignmentList()
         {
             string username = SessionHelper.SessionHelper.Username;
             List<Assignment> _assignments = _assignTask.GetAssignmentsListById(username);
+            return View(_assignments);
+        }
+
+        ///<summary> Complete Assignment List
+        public ActionResult CompleteAssignmentList()
+        {
+            int id = SessionHelper.SessionHelper.UserId;
+            List<Assignment> _assignments = _studentInterface.CompletedAssignmentListByStudent(id);
+            return View(_assignments);
+        }
+
+        ///<summary> Pending Assignment List
+        public ActionResult PendingAssignmentList()
+        {
+            int id = SessionHelper.SessionHelper.UserId;
+            List<Assignment> _assignments = _studentInterface.PendingAssignmentListByStudent(id);
             return View(_assignments);
         }
 

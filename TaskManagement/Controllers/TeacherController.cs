@@ -114,21 +114,32 @@ namespace TaskManagement.Controllers
         }
 
         /// <summary> redirect to all task list page which created by teacher .
-        public ActionResult TaskList()
+        public ActionResult TaskList(int ? pageNumber)
         {
             List<TaskModel> _taskList = new List<TaskModel>();
             string username = SessionHelper.SessionHelper.Username;
             _taskList = _task.GetTaskList(username);
-            return View(_taskList);
+
+            int pageSize = 2;
+            return View(PaginatedList<Tasks>.Create(_DBContext.Tasks.ToList(), pageNumber ?? 1, pageSize));
+            //return View(_taskList);
         }
 
-        //public ActionResult CompletedStudentList()
-        //{
-        //    int id = SessionHelper.SessionHelper.UserId;
-        //    List<Assignment> assignmentModels = new List<Assignment>();
-        //    assignmentModels = _task.TotalCompletedTaskByStudentList(id);
-        //    return View(assignmentModels);
-        //}
+        public ActionResult CompletedStudentList()
+        {
+            int id = SessionHelper.SessionHelper.UserId;
+            List<Assignment> assignmentModels = new List<Assignment>();
+            assignmentModels = _task.TotalCompletedTaskByStudentList(id);
+            return View(assignmentModels);
+        }        
+        
+        public ActionResult PendingStudentList()
+        {
+            int id = SessionHelper.SessionHelper.UserId;
+            List<Assignment> assignmentModels = new List<Assignment>();
+            assignmentModels = _task.TotalPendingTaskByStudentList(id);
+            return View(assignmentModels);
+        }
 
         /// <summary> Log out from dashboard and redirect to Login page - session  will end
         public ActionResult Logout()

@@ -1,27 +1,33 @@
-﻿@Model List<TaskManagement.Models.DBContext.Assignment>;
+﻿@model List<TaskManagement.Models.DBContext.Assignment>
 
 
 <div class="container-fluid">
     <div class="card mx-auto mt-5" style="width:80%">
-        <div class="card-header"><h2 class=" text-success">Assignment List</h2></div>
+        <div class="card-header"><h2 class=" text-success">Completed Task Students List</h2></div>
         <div class="card-body">
-            <table class="table table-striped table-bordered table-success table-hover">
-                <thead class="text-black bg-light">
-                    <tr>
-                        <th>TaskName</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        @foreach (var assignment in Model)
-                        {
+                <table class="table table-striped table-bordered table-success table-hover">
+                    <thead class="text-black bg-light">
                         <tr>
-                            <td>@assignment.TaskName</td>
-                            <!-- Add other columns here -->
+                            <th>TaskName</th>
+                            <th>Student Name</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Tasks.TaskName</td>
+                                <td>@item.Students.Username</td>
+                                <td>@item.Tasks.Deadline</td>
+                                <td>@if (item.status == true) {<a  class="btn btn-success text-white">Completed</a> }</td>
+
+                            </tr>
+                            }
 
                     </tbody>
-            </table>
+                </table>
 
         </div>
         <div class="card-footer">

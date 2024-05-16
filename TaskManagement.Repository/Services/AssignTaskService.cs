@@ -171,26 +171,27 @@ namespace TaskManagement.Repository.Services
         }
 
         /// <summary> Get List of Task Complete by Students
-        //public List<Assignment> TotalCompletedTaskByStudentList(int id)
-        //{
-        //    try
-        //    {
-        //        TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
-        //        List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== true).ToList();
-        //        if(_assignmentList != null)
-        //        {
-        //            return _assignmentList;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
+        public List<Assignment> TotalCompletedTaskByStudentList(int id)
+        {
+            try
+            {
+                TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== true).ToList();
+                if(_assignmentList != null)
+                {
+                    return _assignmentList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         /// <summary> Get Total Number of Task Pending by Students
         public int TotalPendingTaskByStudent(string username)
@@ -210,6 +211,28 @@ namespace TaskManagement.Repository.Services
                 }
                 return TotalPendingTaskByStudent;
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary> Get List of Task Pending by Students
+        public List<Assignment> TotalPendingTaskByStudentList(int id)
+        {
+            try
+            {
+                TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== false).ToList();
+                if(_assignmentList != null)
+                {
+                    return _assignmentList;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {

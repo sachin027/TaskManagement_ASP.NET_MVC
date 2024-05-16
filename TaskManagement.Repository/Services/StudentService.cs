@@ -43,6 +43,33 @@ namespace TaskManagement.Repository.Services
             }
         }
 
+        public List<Assignment> CompletedAssignmentListByStudent(int id)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(x => x.StudentID == id && x.status == true).ToList();
+                return _assignmentList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }        
+        public List<Assignment>PendingAssignmentListByStudent(int id)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                List<Assignment> _assignmentList = _DBContext.Assignment.Where(x => x.StudentID == id && x.status == false).ToList();
+                return _assignmentList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         ///<summary>Count assignment service
         public int TotalAssignments(string username)

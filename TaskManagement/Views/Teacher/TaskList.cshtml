@@ -1,4 +1,11 @@
-﻿@model List<TaskManagement.Models.ViewModel.TaskModel>
+﻿@*@model List<TaskManagement.Models.ViewModel.TaskModel>*@
+@model TaskManagement.Models.ViewModel.PaginatedList<TaskManagement.Models.DBContext.Tasks>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
 <div id="myModalContent">
 
     <div class="modal" id="myModal">
@@ -95,12 +102,22 @@
                     }
                 </tbody>
             </table>
+            <div class="pagination justify-content-end">
+                <a href="@Url.Action("TaskList", new { pageNumber = Model.PageIndex - 1 })" class="btn btn-outline-info @prevDisabled" >Previous</a>
+                <a href="@Url.Action("TaskList", new { pageNumber = Model.PageIndex + 1 })" class="btn btn-outline-info @nextDisabled">Next</a>
+            </div>
         </div>
         <div class="card-footer">
             @Html.ActionLink("Back to HomePage", "TeacherDashboard", new { Controller = "Teacher" }, new { @class = "btn btn-outline-warning" })
+
         </div>
     </div>
 </div>
+
+
+
+
+
 <script>
 
 
@@ -125,7 +142,7 @@
             $('.assignForm').empty();
             var TaskId = $(this).data("id");
             $.ajax({
-                type:'GET',
+                type: 'GET',
                 url: '/Teacher/AssignTask/' + TaskId,
                 success: function (data) {
                     $(".assignForm").append(data);
