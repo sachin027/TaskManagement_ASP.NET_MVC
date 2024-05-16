@@ -85,7 +85,7 @@ namespace TaskManagement.Controllers
             _taskList = _task.GetTaskList(username);
             ViewBag._taskList = _taskList;
             
-            return View("AssignTask" );
+            return PartialView("_AssignTask");
         }
 
         [HttpPost]
@@ -97,7 +97,7 @@ namespace TaskManagement.Controllers
                 {
                     bool isSaving = _task.AssignTaskToStudent(assignmentModel);
 
-                    if (isSaving) //error : use of unsugned local variable
+                    if (isSaving)
                     {
                         TempData["success"] = "Task assign successfully";
                         return RedirectToAction("TeacherDashboard");

@@ -95,7 +95,6 @@
                     }
                 </tbody>
             </table>
-            x
         </div>
         <div class="card-footer">
             @Html.ActionLink("Back to HomePage", "TeacherDashboard", new { Controller = "Teacher" }, new { @class = "btn btn-outline-warning" })
@@ -126,13 +125,17 @@
             $('.assignForm').empty();
             var TaskId = $(this).data("id");
             $.ajax({
-                method: "GET",
-                url: '/Teacher/AssignTask?id=' + TaskId,
+                type:'GET',
+                url: '/Teacher/AssignTask/' + TaskId,
                 success: function (data) {
                     $(".assignForm").append(data);
                     $("#assignModal").modal("show");
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
                 }
             })
         })
     })
+
 </script>
