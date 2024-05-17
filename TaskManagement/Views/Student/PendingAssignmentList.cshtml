@@ -1,4 +1,4 @@
-﻿@model List<TaskManagement.Models.DBContext.Assignment>
+﻿@model List<TaskManagement.Models.ViewModel.AssignmentModelList>
 
 
 <div class="container-fluid">
@@ -12,7 +12,6 @@
                     <tr>
                         <th>TaskName</th>
                         <th>DeadLine</th>
-                        <th>Teacher Name</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -25,13 +24,12 @@
                         foreach (var item in Model)
                         {
                     <tr>
-                        <td>@item.Tasks.TaskName</td>
-                        <td>@item.Tasks.Deadline</td>
-                        <td>@item.Tasks.Teachers.Username</td>
+                        <td>@item.TaskName</td>
+                        <td>@item.Deadline</td>
                         <td>
                             @if (item.status == false)
                             {
-                                if (@item.Tasks.Deadline > DateTime.Now)
+                                if (@item.Deadline > DateTime.Now)
                                 {
                                     <div><a class=" btn btn-warning" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
                                 }

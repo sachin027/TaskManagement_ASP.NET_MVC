@@ -1,38 +1,32 @@
 ﻿@model List<TaskManagement.Models.ViewModel.AssignmentModelList>
 
-
 <div class="container-fluid">
     <div class="card mx-auto mt-5" style="width:80%">
-        <div class="card-header"><h2 class=" text-success">Pending Task Students List</h2></div>
+        <div class="card-header"><h2 class=" text-success">Total Assign Student List</h2></div>
         <div class="card-body">
             <table class="table table-striped table-bordered table-success table-hover">
                 <thead class="text-black bg-light">
                     <tr>
+                        <th>Sr.No</th>
                         <th>TaskName</th>
                         <th>Student Name</th>
-                        <th>Deadline</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @for (var i = 0; i < Model.Count; i++)
                     {
                         <tr>
-                            <td>@item.TaskName</td>
-                            <td>@item.StudentName</td>
-                            <td>@item.Deadline</td>
-                            <td>@if (item.status == false)
-                            {<a class="btn btn-danger text-white">Not Completed</a>}</td>
-
+                            <td>@(i + 1)</td> <!-- Displaying serial number -->
+                            <td>@Model[i].TaskName</td>
+                            <td>@Model[i].StudentName</td>
                         </tr>
                     }
-
                 </tbody>
             </table>
-
         </div>
         <div class="card-footer">
             @Html.ActionLink("Back to HomePage", "TeacherDashboard", new { Controller = "Teacher" }, new { @class = "btn btn-outline-warning" })
+
         </div>
     </div>
 </div>

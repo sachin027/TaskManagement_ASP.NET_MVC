@@ -15,5 +15,18 @@ namespace TaskManagement.Models.ViewModel
         public virtual Students Students { get; set; }
         public virtual Tasks Tasks { get; set; }
         public Nullable<bool> status { get; set; }
+    }    
+    
+    public class AssignmentModelList
+    {
+        public int AssignmentID { get; set; }
+        public Nullable<int> TaskID { get; set; }
+        public int StudentID { get; set; }
+        public string StudentName { get; set; }
+        public string TaskName { get; set; }
+
+        public string Description { get; set; }
+        public DateTime Deadline { get; set; }
+        public Nullable<bool> status { get; set; }
     }
 }

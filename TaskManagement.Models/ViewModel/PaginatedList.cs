@@ -8,25 +8,24 @@ namespace TaskManagement.Models.ViewModel
 {
     public class PaginatedList<T> : List<T>
     {
-        public int PageIndex { get; set; }
-        public int Total { get; set; }
+        public static int totalCount;
+        public static int page;
+        public static int pageSize;
+        public static int totalPage;
 
-        public PaginatedList(List<T> items, int count , int pageIndex , int pageSize)
+        public static List<T> Pagination(List<T> _list, int page)
         {
-            PageIndex = pageIndex;
-            Total = (int)Math.Ceiling(count / (double)pageSize);
-            this.AddRange(items);
+            int pageSize = 2;
+
+            int totalCount = _list.Count();
+            int totalPage = (int)Math.Ceiling((decimal)totalCount / pageSize);
+
+            var DetailsPerPage = _list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            PaginatedList<T>.totalCount = totalCount;
+            PaginatedList<T>.page = page;
+            PaginatedList<T>.pageSize = pageSize;
+            PaginatedList<T>.totalPage = totalPage;
+            return DetailsPerPage;
         }
-
-        public bool HasPreviousPage => PageIndex > 1;
-        public bool HasNextPage => PageIndex < Total;
-
-        public static PaginatedList<T> Create(List<T> source , int pageIndex , int pageSize)
-        {
-            var count = source.Count;
-            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
-        }
-
     }
 }

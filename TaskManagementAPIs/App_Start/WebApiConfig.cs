@@ -10,7 +10,17 @@ namespace TaskManagementAPIs
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+var jsonSettings = config.Formatters.JsonFormatter.SerializerSettings;
 
+            jsonSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            jsonSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+
+            jsonSettings.Formatting = Newtonsoft.Json.Formatting.None; // Ensure single line JSON
+
+            // Remove XML formatter
+
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
             // Web API routes
             config.MapHttpAttributeRoutes();
 

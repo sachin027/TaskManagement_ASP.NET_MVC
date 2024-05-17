@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManagement.Helper.AssignmentHelper;
 using TaskManagement.Helper.StudentHelper;
 using TaskManagement.Helper.TaskHelper;
 using TaskManagement.Models.DBContext;
@@ -30,7 +32,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary> Get task list of specific teacher
+        /// <summary> Get task list of specific teacher  --- sp
         public List<TaskModel> GetTaskList(string username)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -170,13 +172,17 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary> Get List of Task Complete by Students
-        public List<Assignment> TotalCompletedTaskByStudentList(int id)
+        /// <summary> Get List of Task Complete by Students  USING API
+        public List<AssignmentModelList> TotalCompletedTaskByStudentList(int id)
         {
             try
             {
                 TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
-                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== true).ToList();
+
+                List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
+                List<Assignment> assignments = _DBContext.Assignment.Where(m => m.Tasks.CreatorID == id && m.status == true).ToList();
+                _assignmentList = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(assignments);
+                
                 if(_assignmentList != null)
                 {
                     return _assignmentList;
@@ -218,14 +224,16 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary> Get List of Task Pending by Students
-        public List<Assignment> TotalPendingTaskByStudentList(int id)
+        /// <summary> Get List of Task Pending by Students USING API
+        public List<AssignmentModelList> TotalPendingTaskByStudentList(int id)
         {
             try
             {
                 TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
-                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== false).ToList();
-                if(_assignmentList != null)
+                List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
+                List<Assignment> assignmentList = _DBContext.Assignment.Where(u => u.Tasks.CreatorID == id && u.status== false).ToList();
+                _assignmentList = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(assignmentList); ;
+                if (_assignmentList != null)
                 {
                     return _assignmentList;
                 }
@@ -254,6 +262,31 @@ namespace TaskManagement.Repository.Services
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+        }
+
+        /// <summary> Get All task List of Teacher using API
+        public List<AssignmentModelList> GetAllTaskAssignedStudentList(int id)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                List<AssignmentModelList> _taskList = new List<AssignmentModelList>();
+                List<Assignment> task = _DBContext.Assignment.Where(m => m.Tasks.CreatorID == id).ToList();
+
+                _taskList = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(task);
+                if (_taskList != null)
+                {
+                    return _taskList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManagement.Common;
 using TaskManagement.CustomFilter;
 using TaskManagement.Models.DBContext;
+using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface;
 using TaskManagement.Repository.Services;
 
@@ -41,19 +44,21 @@ namespace TaskManagement.Controllers
         }
 
         ///<summary> Complete Assignment List
-        public ActionResult CompleteAssignmentList()
+        public async Task<ActionResult> CompleteAssignmentList()
         {
             int id = SessionHelper.SessionHelper.UserId;
-            List<Assignment> _assignments = _studentInterface.CompletedAssignmentListByStudent(id);
+            List<AssignmentModelList> _assignments = new List<AssignmentModelList>();
+            _assignments = await WebAPIHelper.CompleteAssignmentList();
             return View(_assignments);
         }
 
         ///<summary> Pending Assignment List
-        public ActionResult PendingAssignmentList()
+        public async Task<ActionResult> PendingAssignmentList()
         {
             int id = SessionHelper.SessionHelper.UserId;
-            List<Assignment> _assignments = _studentInterface.PendingAssignmentListByStudent(id);
-            return View(_assignments);
+            List<AssignmentModelList> _assignment = new List<AssignmentModelList>();
+            _assignment = await WebAPIHelper.PendingAssignmentList();
+            return View(_assignment);
         }
 
         /// <summary>  Log out from dashboard and redirect to Login page - session  will end

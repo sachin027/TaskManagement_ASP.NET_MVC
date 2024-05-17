@@ -19,6 +19,8 @@ namespace TaskManagement.Repository.Interface
         /// <summary> Get task List
         List<TaskModel> GetTaskList(string username);
 
+        /// <summary> Return all Assigned Task student List
+        List<AssignmentModelList> GetAllTaskAssignedStudentList(int id);
         /// <summary> Assign Task
         bool AssignTaskToStudent(AssignmentModel assignment);
 
@@ -33,8 +35,8 @@ namespace TaskManagement.Repository.Interface
 
         /// <summary> Get Total Number of Task Complete by Students
         int TotalCompletedTaskByStudent( string username);
-        List<Assignment> TotalCompletedTaskByStudentList(int id);
-        List<Assignment> TotalPendingTaskByStudentList(int id);
+        List<AssignmentModelList> TotalCompletedTaskByStudentList(int id);
+        List<AssignmentModelList> TotalPendingTaskByStudentList(int id);
         
         /// <summary> Get Total Number of Task Pending by Students
         int TotalPendingTaskByStudent( string username);

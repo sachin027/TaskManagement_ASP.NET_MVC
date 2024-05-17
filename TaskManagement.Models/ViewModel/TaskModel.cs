@@ -27,4 +27,16 @@ namespace TaskManagement.Models.ViewModel
         public virtual Teachers Teachers { get; set; }
     }
 
+    public class CustomTaskModel
+    {
+
+        public int TaskID { get; set; }
+        public string TaskName { get; set; }
+        public string Description { get; set; }
+
+        public string Assignment { get; set; }
+        public string Teacher { get; set; }
+        public DateTime Deadline { get; set; }
+        public int CreatorID { get; set; }
+    }
 }

@@ -152,7 +152,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-1">
                             <div class="card-body">
-                                <a href="./TaskList">
+                                <a href="TaskList">
                                     <h3 class="card-title text-white">Total Created Task</h3>
                                     <div class="d-inline-block">
                                         <h2 class="text-white">@ViewBag.TotalCreatedTaskByTeacher</h2>
@@ -165,10 +165,12 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-2">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Total Task Assigned Students</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">@ViewBag.TotalTaskAssignToStudent</h2>
-                                </div>
+                                <a href="GetAllTaskAssignedStudentList">
+                                    <h3 class="card-title text-white">Total Task Assigned Students</h3>
+                                    <div class="d-inline-block">
+                                        <h2 class="text-white">@ViewBag.TotalTaskAssignToStudent</h2>
+                                    </div>
+                                </a>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                             </div>
                         </div>

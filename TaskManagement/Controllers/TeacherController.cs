@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManagement.Common;
 using TaskManagement.CustomFilter;
 using TaskManagement.Models.DBContext;
 using TaskManagement.Models.ViewModel;
@@ -17,6 +20,8 @@ namespace TaskManagement.Controllers
     public class TeacherController : Controller
     {
         TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+
+        HttpClient _client = new HttpClient();
 
         private readonly IAssignTask _task;
         private readonly IAddTask _addTask;
@@ -53,7 +58,7 @@ namespace TaskManagement.Controllers
         {
             try
             {
-                if(customTaskModel != null && ModelState.IsValid)
+                if (customTaskModel != null && ModelState.IsValid)
                 {
                     _addTask.AddTask(customTaskModel);
                     TempData["success"] = "Task added successfully";
@@ -78,13 +83,13 @@ namespace TaskManagement.Controllers
         {
             List<StudentModel> _studentList = new List<StudentModel>();
             _studentList = _task.GetStudentListById(id);
-            ViewBag._studentlist = _studentList; 
+            ViewBag._studentlist = _studentList;
 
             List<TaskModel> _taskList = new List<TaskModel>();
             string username = SessionHelper.SessionHelper.Username;
             _taskList = _task.GetTaskList(username);
             ViewBag._taskList = _taskList;
-            
+
             return PartialView("_AssignTask");
         }
 
@@ -110,34 +115,53 @@ namespace TaskManagement.Controllers
             {
                 throw ex;
             }
-          
+
         }
 
         /// <summary> redirect to all task list page which created by teacher .
-        public ActionResult TaskList(int ? pageNumber)
+        public ActionResult TaskList(int? pageNumber)
         {
             List<TaskModel> _taskList = new List<TaskModel>();
             string username = SessionHelper.SessionHelper.Username;
             _taskList = _task.GetTaskList(username);
 
-            int pageSize = 2;
-            return View(PaginatedList<Tasks>.Create(_DBContext.Tasks.ToList(), pageNumber ?? 1, pageSize));
+            int page = pageNumber ?? 1;
+
+           var _pagination = PaginatedList<TaskModel>.Pagination(_taskList, page);
+
+            ViewBag.totalCount = PaginatedList<TaskModel>.totalCount;
+            ViewBag.page = PaginatedList<TaskModel>.page;
+            ViewBag.pageSize = PaginatedList<TaskModel>.pageSize;
+            ViewBag.totalPage = PaginatedList<TaskModel>.totalPage;
+
+            return View(_pagination);
             //return View(_taskList);
         }
 
-        public ActionResult CompletedStudentList()
+        /// <summary> Get all task assigned student List
+        public async Task<ActionResult> GetAllTaskAssignedStudentList()
         {
             int id = SessionHelper.SessionHelper.UserId;
-            List<Assignment> assignmentModels = new List<Assignment>();
-            assignmentModels = _task.TotalCompletedTaskByStudentList(id);
+            List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
+            assignmentModels = await WebAPIHelper.GetAllTaskAssignedStudentList();
             return View(assignmentModels);
-        }        
-        
-        public ActionResult PendingStudentList()
+        }
+
+        /// <summary> Get all completed task student list
+        public async Task<ActionResult> CompletedStudentList()
         {
             int id = SessionHelper.SessionHelper.UserId;
-            List<Assignment> assignmentModels = new List<Assignment>();
-            assignmentModels = _task.TotalPendingTaskByStudentList(id);
+            List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
+            assignmentModels = await WebAPIHelper.CompletedStudentList();
+            return View(assignmentModels);
+        }
+
+        /// <summary> Get all pending task student list
+        public async Task<ActionResult> PendingStudentList()
+        {
+            int id = SessionHelper.SessionHelper.UserId;
+            List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
+            assignmentModels = await WebAPIHelper.PendingStudentList();
             return View(assignmentModels);
         }
 
@@ -149,15 +173,14 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Index", "LoginSignup");
         }
 
-
         ///<summary> edit Task 
         public ActionResult Edit(int? id)
         {
-            Tasks _task =  _DBContext.Tasks.FirstOrDefault(m => m.TaskID == id);
+            Tasks _task = _DBContext.Tasks.FirstOrDefault(m => m.TaskID == id);
             return PartialView("_EditTask", _task);
         }
 
-       
+
     }
 }
 

@@ -4,7 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManagement.Helper.AssignmentHelper;
 using TaskManagement.Models.DBContext;
+using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface;
 
 namespace TaskManagement.Repository.Services
@@ -43,26 +45,29 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        public List<Assignment> CompletedAssignmentListByStudent(int id)
+        public List<AssignmentModelList> CompletedAssignmentListByStudent(int id)
         {
-            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
             try
             {
+                List<AssignmentModelList> assignmentModel = new List<AssignmentModelList>();
                 List<Assignment> _assignmentList = _DBContext.Assignment.Where(x => x.StudentID == id && x.status == true).ToList();
-                return _assignmentList;
+                assignmentModel = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(_assignmentList);
+                return assignmentModel;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }        
-        public List<Assignment>PendingAssignmentListByStudent(int id)
+        public List<AssignmentModelList>PendingAssignmentListByStudent(int id)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
             try
             {
+                List<AssignmentModelList> assignmentModel = new List<AssignmentModelList>();
                 List<Assignment> _assignmentList = _DBContext.Assignment.Where(x => x.StudentID == id && x.status == false).ToList();
-                return _assignmentList;
+                assignmentModel = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(_assignmentList);
+                return assignmentModel;
             }
             catch (Exception ex)
             {

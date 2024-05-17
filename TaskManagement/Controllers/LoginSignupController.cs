@@ -122,9 +122,7 @@ namespace TaskManagement.Controllers.LoginSignup
             }
         }
 
-        /// <summary>
-        /// City dropdown 
-        /// </summary>
+        /// <summary>  City dropdown 
         public JsonResult CitiesByState(int id)
         {
             List<CityModel> list = _city.GetCityByStateId(id);

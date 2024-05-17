@@ -27,5 +27,7 @@ namespace TaskManagement.Models.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignment { get; set; }
         public virtual Cities Cities { get; set; }
+
+        //public string Aname { get; set; }
     }
 }
