@@ -26,6 +26,7 @@ namespace TaskManagement.Helper.AssignmentHelper
                     assignmentModel.TaskName = item.Tasks.TaskName;
                     assignmentModel.Description = item.Tasks.Description;
                     assignmentModel.Deadline = (DateTime)item.Tasks.Deadline;
+                    assignmentModel.TeacherName = item.Tasks.Teachers.Username;
                     assignmentModelLists.Add(assignmentModel);
                 }
             }

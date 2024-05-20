@@ -36,28 +36,52 @@ namespace TaskManagement.Controllers
         }
 
         ///<summary> Total Assignment List
-        public ActionResult AssignmentList()
+        public async  Task<ActionResult> AssignmentList(int? pageNumber)
         {
-            string username = SessionHelper.SessionHelper.Username;
-            List<Assignment> _assignments = _assignTask.GetAssignmentsListById(username);
-            return View(_assignments);
+            int id = SessionHelper.SessionHelper.UserId;
+            List<AssignmentModelList> _assignments = await WebAPIHelper.GetAllAssignedTask();
+            var page = pageNumber ?? 1;
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+            return View(_pagination);
         }
 
         ///<summary> Complete Assignment List
-        public async Task<ActionResult> CompleteAssignmentList()
+        public async Task<ActionResult> CompleteAssignmentList(int? pageNumber)
         {
             int id = SessionHelper.SessionHelper.UserId;
             List<AssignmentModelList> _assignments = new List<AssignmentModelList>();
             _assignments = await WebAPIHelper.CompleteAssignmentList();
-            return View(_assignments);
+
+            var page = pageNumber ?? 1;
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+            return View(_pagination);
         }
 
         ///<summary> Pending Assignment List
-        public async Task<ActionResult> PendingAssignmentList()
+        public async Task<ActionResult> PendingAssignmentList(int? pageNumber)
         {
             int id = SessionHelper.SessionHelper.UserId;
             List<AssignmentModelList> _assignment = new List<AssignmentModelList>();
             _assignment = await WebAPIHelper.PendingAssignmentList();
+
+            var page = pageNumber ?? 1;
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(_assignment, page);
+
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+            return View(_pagination);
             return View(_assignment);
         }
 
@@ -70,10 +94,11 @@ namespace TaskManagement.Controllers
         }
 
         ///<summary> Update assignment status
-        public ActionResult SetAssignmentStatus(int id)
+        public async Task<ActionResult> SetAssignmentStatus(int id)
         {
 
-            bool setStatus = _studentInterface.AssignmentStatus(id);
+            //bool setStatus = _studentInterface.AssignmentStatus(id);
+            bool setStatus = await WebAPIHelper.SetAssignmentStatus(id);
 
             if (setStatus)
             {

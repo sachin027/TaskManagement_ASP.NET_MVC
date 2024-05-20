@@ -34,11 +34,11 @@
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Select role</label>
                             <select class="form-control" name="Role" id="Role" required>
-                                <option selected hidden>--Select Role--</option>
+                                <option selected disabled>--Select Role--</option>
                                 <option value="Student">Student</option>
                                 <option value="Teacher">Teacher</option>
                             </select>
-                            @Html.ValidationMessageFor(m => m.Role, "Role must be selected", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
                         </div>
                         <div class="row ">
                             <div class="form-group mb-3 col-lg-3">

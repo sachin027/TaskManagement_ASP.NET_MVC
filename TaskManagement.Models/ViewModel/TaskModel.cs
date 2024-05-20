@@ -34,9 +34,9 @@ namespace TaskManagement.Models.ViewModel
         public string TaskName { get; set; }
         public string Description { get; set; }
 
-        public string Assignment { get; set; }
         public string Teacher { get; set; }
         public DateTime Deadline { get; set; }
         public int CreatorID { get; set; }
+        public string TeacherName { get; set; }
     }
 }

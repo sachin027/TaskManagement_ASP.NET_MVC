@@ -10,7 +10,7 @@ namespace TaskManagement.Repository.Interface
 {
     public interface IStudentInterface
     {
-       bool AssignmentStatus(int id);
+        bool AssignmentStatus(int id);
 
         ///<summary> Count total number of assignments
         int TotalAssignments(string username);

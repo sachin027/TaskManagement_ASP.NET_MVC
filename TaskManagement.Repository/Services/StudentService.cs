@@ -14,6 +14,8 @@ namespace TaskManagement.Repository.Services
     public class StudentService : IStudentInterface
     {
         TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+
+        /// <summary> Total assignments with status
         public bool AssignmentStatus(int id)
         {
             try
@@ -45,6 +47,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
+        ///<summary>Return all completed assignment student list
         public List<AssignmentModelList> CompletedAssignmentListByStudent(int id)
         {
             try
@@ -58,7 +61,9 @@ namespace TaskManagement.Repository.Services
             {
                 throw ex;
             }
-        }        
+        }
+
+        ///<summary>Return all pending assignment student list
         public List<AssignmentModelList>PendingAssignmentListByStudent(int id)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -74,7 +79,6 @@ namespace TaskManagement.Repository.Services
                 throw ex;
             }
         }
-
 
         ///<summary>Count assignment service
         public int TotalAssignments(string username)
@@ -119,7 +123,6 @@ namespace TaskManagement.Repository.Services
                 throw ex;
             }
         }
-
 
         ///<summary> count total number of pending task
         public int TotalPendingAssignment(string username)

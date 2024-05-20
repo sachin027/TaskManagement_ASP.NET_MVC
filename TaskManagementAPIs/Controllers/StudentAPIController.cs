@@ -16,42 +16,14 @@ namespace TaskManagementAPIs.Controllers
     public class StudentAPIController : ApiController
     {
         private readonly IStudentInterface _studentInterface;
-        private readonly IAssignTask _assignTask;
-        TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+        private readonly IAssignTask _assignInterface;
         public StudentAPIController()
         {
-            this._assignTask = new AssignTaskService();
             this._studentInterface = new StudentService();
+            this._assignInterface = new AssignTaskService();
         }
 
-        [HttpGet]
-        [Route("api/StudentAPI/GetAllTaskAssignedStudentList")]
-        public List<AssignmentModelList> GetAllTaskAssignedStudentList(int id)
-        {
-            List<AssignmentModelList> _taskList = new List<AssignmentModelList>();
-            _taskList = _assignTask.GetAllTaskAssignedStudentList(id);
-            return _taskList;
-        }
-
-
-        [HttpGet]
-        [Route("api/StudentAPI/AList")]
-        public List<AssignmentModelList> AList(int id)
-        {
-            List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
-            _assignmentList = _assignTask.TotalCompletedTaskByStudentList(id);
-            return _assignmentList;
-        }
-
-        [HttpGet]
-        [Route("api/StudentAPI/GetPendingTaskStudentList")]
-        public List<AssignmentModelList> GetPendingStudentList(int id)
-        {
-            List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
-            _assignmentList = _assignTask.TotalPendingTaskByStudentList(id);
-            return _assignmentList;
-        }
-
+        /// <summary> Return Completed assignment List By stundent
         [HttpGet]
         [Route("api/StudentAPI/CompletedAssignmentListByStudent")]
         public List<AssignmentModelList> CompletedAssignmentListByStudent(int id)
@@ -59,8 +31,9 @@ namespace TaskManagementAPIs.Controllers
             List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
             _assignmentList = _studentInterface.CompletedAssignmentListByStudent(id);
             return _assignmentList;
-        }        
-        
+        }
+
+        /// <summary> Return pending assignment List By Student
         [HttpGet]
         [Route("api/StudentAPI/PendingAssignmentListByStudent")]
         public List<AssignmentModelList> PendingAssignmentListByStudent(int id)
@@ -69,5 +42,33 @@ namespace TaskManagementAPIs.Controllers
             _assignmentList = _studentInterface.PendingAssignmentListByStudent(id);
             return _assignmentList;
         }
+
+
+        ///<summary> Set assignment Status 
+        [HttpPost]
+        [Route("api/StudentAPI/SetAssignmentStatus")]
+        public bool SetAssignmentStatus(int id)
+        {
+            try
+            {
+                bool setStatus = _studentInterface.AssignmentStatus(id);
+                return setStatus;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        ///<summary> Return all assigned task of student
+        [HttpGet]
+        [Route("api/StudentAPI/GetAllAssignedTask")]
+        public List<AssignmentModelList> GetAllAssignedTask(int id)
+        {
+            List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
+            _assignmentList = _assignInterface.GetAssignmentsListById(id);
+            return _assignmentList;
+        }
+
     }
 }

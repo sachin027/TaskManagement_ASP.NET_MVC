@@ -64,5 +64,34 @@ namespace TaskManagement.Helper.TaskHelper
                 throw ex;
             }
         }
+
+        public static List<CustomTaskModel> ConvertDbTaskIntoCustomTaskModel(List<Tasks> taskList)
+        {
+            List<CustomTaskModel> _taskModel = new List<CustomTaskModel>();
+            try
+            {
+                if (taskList != null && taskList.Count > 0)
+                {
+                    foreach (var items in taskList)
+                    {
+                        CustomTaskModel _task = new CustomTaskModel();
+                        _task.TaskID = items.TaskID;
+                        _task.TaskName = items.TaskName;
+                        _task.Description = items.Description;
+                        _task.Deadline = (DateTime)items.Deadline;
+                        _task.CreatorID = items.Teachers.TeacherID;
+                        _task.TeacherName = items.Teachers.Username;
+
+                        _taskModel.Add(_task);
+                    }
+                }
+                return _taskModel;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

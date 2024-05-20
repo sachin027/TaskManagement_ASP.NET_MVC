@@ -32,7 +32,7 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary> Get task list of specific teacher  --- sp
+        /// <summary> Get task list of specific teacher
         public List<TaskModel> GetTaskList(string username)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
@@ -42,6 +42,22 @@ namespace TaskManagement.Repository.Services
                 List<Tasks> task = _DBContext.Tasks.Where(m => m.Teachers.Username == username).ToList();
 
                 _taskList = TaskHelper.GetTaskListByHelper(task);
+                return _taskList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<CustomTaskModel> GetCustomTaskList(string username)
+        {
+            TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
+            try
+            {
+                List<CustomTaskModel> _taskList = new List<CustomTaskModel>();
+                List<Tasks> task = _DBContext.Tasks.Where(m => m.Teachers.Username == username).ToList();
+
+                _taskList = TaskHelper.ConvertDbTaskIntoCustomTaskModel(task);
                 return _taskList;
             }
             catch (Exception ex)
@@ -81,18 +97,25 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-        /// <summary> Return all assign Task List by all teachers     
-        public List<Assignment> GetAssignmentsListById(string userName)
+        /// <summary> Return all assign Task List Of Students  
+        public List<AssignmentModelList> GetAssignmentsListById(int id)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
             try
             {
                 Students _student = new Students();
-                _student = _DBContext.Students.FirstOrDefault(x=>x.Username==userName);
-                int id = _student.StudentID;
-                List<Assignment> _assignmentList = _DBContext.Assignment.Where(u => u.StudentID == id).ToList();
+                List<AssignmentModelList> _assignmentList = new List<AssignmentModelList>();
+                List<Assignment> _assignment = _DBContext.Assignment.Where(u => u.StudentID == id).ToList();
+                _assignmentList = AssignmentHelper.ConvertDBAssignmentListToAssignmentModelList(_assignment);
 
-                return _assignmentList;
+                if(_assignmentList != null)
+                {
+                    return _assignmentList;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
@@ -198,7 +221,6 @@ namespace TaskManagement.Repository.Services
             }
         }
 
-
         /// <summary> Get Total Number of Task Pending by Students
         public int TotalPendingTaskByStudent(string username)
         {
@@ -249,7 +271,7 @@ namespace TaskManagement.Repository.Services
         }
 
         /// <summary>Get Student List of those who have not received any Task
-        public List<StudentModel> GetStudentListById(int id)
+        public List<StudentModel> GetStudentListById(int? id)
         {
             TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
             try

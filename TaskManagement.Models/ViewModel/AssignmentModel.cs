@@ -24,7 +24,7 @@ namespace TaskManagement.Models.ViewModel
         public int StudentID { get; set; }
         public string StudentName { get; set; }
         public string TaskName { get; set; }
-
+        public string TeacherName { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
         public Nullable<bool> status { get; set; }

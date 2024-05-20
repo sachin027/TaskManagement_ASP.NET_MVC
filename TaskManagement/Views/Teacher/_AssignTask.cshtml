@@ -1,4 +1,6 @@
-﻿@using (Html.BeginForm("AssignTask", "Teacher", FormMethod.Post))
+﻿@model TaskManagement.Models.ViewModel.AssignmentModel
+
+@using (Html.BeginForm("AssignTask", "Teacher", FormMethod.Post))
 {
 <div class="container">
     <div class="card mx-auto mt-5" style="width:80%">
@@ -11,22 +13,23 @@
                         @foreach (var item in ViewBag._studentList)
                         {
                             <option value="@item.StudentID">@item.Username</option>
-                            }
-                    </select>
-                </div>
-            </div>
-
-            <div class="row mt-2 mb-4">
-                <div class="col-lg-12">
-                    <select name="TaskID" id="TaskID" class="form-control">
-                        <option value="Select" selected>Select</option>
-                        @foreach (var item in ViewBag._TaskList)
-                        {
-                            <option value=@item.TaskID>@item.TaskName</option>
                         }
                     </select>
                 </div>
             </div>
+            <input class="form-control" value="@ViewBag.TaskId" name="TaskID"  />
+            @*<div class="row mt-2 mb-4">
+            <div class="col-lg-12">
+                <select name="TaskID" id="TaskID" class="form-control">
+                    <option value="Select" selected>Select</option>
+                    @foreach (var item in ViewBag._TaskList)
+                    {
+                        <option value=@item.TaskID>@item.TaskName</option>
+                    }
+                </select>
+            </div>
+        </div>*@
+
         </div>
         <div class="card-footer">
             <input type="submit" name="submit" class="btn btn-outline-success" />

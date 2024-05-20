@@ -5,29 +5,53 @@
     <div class="card mx-auto mt-5" style="width:80%">
         <div class="card-header"><h2 class=" text-success">Completed Task Students List</h2></div>
         <div class="card-body">
-                <table class="table table-striped table-bordered table-success table-hover">
-                    <thead class="text-black bg-light">
+            <table class="table table-striped table-bordered table-success table-hover">
+                <thead class="text-black bg-light">
+                    <tr>
+                        <th>TaskName</th>
+                        <th>Student Name</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
                         <tr>
-                            <th>TaskName</th>
-                            <th>Student Name</th>
-                            <th>Deadline</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.TaskName</td>
-                                <td>@item.StudentName</td>
-                                <td>@item.Deadline</td>
-                                <td>@if (item.status == true) {<a  class="btn btn-success text-white">Completed</a> }</td>
+                            <td>@item.TaskName</td>
+                            <td>@item.StudentName</td>
+                            <td>@item.Deadline</td>
+                            <td>
+                                @if (item.status == true)
+                                {<a class="btn btn-success text-white">Completed</a>}
+                        </td>
 
-                            </tr>
-                            }
+                    </tr>
+                }
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+
+                @{ int StartPage = Math.Max(1, ViewBag.page - 2);
+                    int EndingPage = Math.Min(ViewBag.totalPage, StartPage + 4); }
+
+                @if (ViewBag.page > 1)
+                {
+
+                    @Html.ActionLink("First", "CompletedStudentList", "Teacher", new { pageNumber = 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })}
+
+
+                @for (int i = StartPage; i <= EndingPage; i++)
+                {
+
+                    @Html.ActionLink(@i.ToString(), "CompletedStudentList", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })}
+                @if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+                {
+                    @Html.ActionLink("Last", "CompletedStudentList", "Teacher", new { pageNumber = ViewBag.totalPage }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })}
+
+            </div>
+
 
         </div>
         <div class="card-footer">

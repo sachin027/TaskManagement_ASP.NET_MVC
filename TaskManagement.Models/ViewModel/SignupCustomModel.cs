@@ -12,6 +12,7 @@ namespace TaskManagement.Models.ViewModel
         public int UserId { get; set; }
 
         [Required]
+        [RegularExpression(@"^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,8}$", ErrorMessage ="Contain alphabets and numbers")]
         [MaxLength(8, ErrorMessage = "Maximum 8 characters allowed")]
         [MinLength(4, ErrorMessage = "Minimum 4 characters should be entered")]                                                    
         public string Username { get; set; }
@@ -32,7 +33,7 @@ namespace TaskManagement.Models.ViewModel
         [RegularExpression("^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Role must be selected")]
         public string Role { get; set; }
 
         [Required(ErrorMessage ="State must be selected")]

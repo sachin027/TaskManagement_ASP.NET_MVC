@@ -14,7 +14,7 @@ namespace TaskManagement.Repository.Services
     {
         TaskManagement_452Entities _DBContext = new TaskManagement_452Entities();
         /// <summary> Add Task 
-        public Tasks AddTask(TaskModel task)
+        public bool AddTask(TaskModel task)
         {
             try
             {
@@ -22,7 +22,15 @@ namespace TaskManagement.Repository.Services
                 _task = TaskHelper.ConvertTaskModeltoTask(task);
                 _DBContext.Tasks.Add(_task);
                 _DBContext.SaveChanges();
-                return _task;
+                if(_task != null)
+                {
+
+                return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -30,7 +38,5 @@ namespace TaskManagement.Repository.Services
                 throw ex;
             }
         }
-
-
     }
 }

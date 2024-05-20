@@ -1,4 +1,4 @@
-﻿@model List<TaskManagement.Models.DBContext.Assignment>
+﻿@model List<TaskManagement.Models.ViewModel.AssignmentModelList>
 
 
 <div class="container-fluid">
@@ -19,47 +19,66 @@
                 </thead>
                 <tbody>
 
-                    @if(Model != null)
-                            {
+                    @if (Model != null)
+                    {
 
 
-                            foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Tasks.TaskName</td>
-                                    <td>@item.Tasks.Deadline</td>
-                                    <td>@item.Tasks.Teachers.Username</td>
-                                    <td>
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TaskName</td>
+                                <td>@item.Deadline</td>
+                                <td>@item.TeacherName</td>
+                                <td>
 
-                                        <button class="btn btn-info " onclick="openModal(@item.AssignmentID)">Details</button>
-                                        <div id="myModalContent">
-                                        </div>
+                                    <button class="btn btn-info " onclick="openModal(@item.AssignmentID)">Details</button>
+                                    <div id="myModalContent">
+                                    </div>
 
-                                    </td>
-                                    <td>
-                                        @if (item.status == false)
+                                </td>
+                                <td>
+                                    @if (item.status == false)
+                                    {
+                                        if (@item.Deadline > DateTime.Now)
                                         {
-                                            if (@item.Tasks.Deadline > DateTime.Now)
-                                            {
-                                                <div><a class=" btn btn-warning" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
-                                            }
-                                            else
-                                            {
-                                                <button class="btn btn-danger">Deadline over</button>
-                                            }
+                                            <div><a class=" btn btn-warning" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-success">Submitted</button>
+                                            <button class="btn btn-danger">Deadline over</button>
                                         }
-                                    </td>
-                                </tr>
-                            }
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-success">Submitted</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
 
                     }
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end">
 
+                @{ int StartPage = Math.Max(1, ViewBag.page - 2);
+                    int EndingPage = Math.Min(ViewBag.totalPage, StartPage + 4); }
+
+                @if (ViewBag.page > 1)
+                {
+
+                    @Html.ActionLink("First", "AssignmentList", "Student", new { pageNumber = 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })}
+
+
+                @for (int i = StartPage; i <= EndingPage; i++)
+                {
+
+                    @Html.ActionLink(@i.ToString(), "AssignmentList", "Student", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })}
+                @if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+                {
+                    @Html.ActionLink("Last", "AssignmentList", "Student", new { pageNumber = ViewBag.totalPage }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })}
+
+            </div>
         </div>
         <div class="card-footer"><a href="./StudentDashboard"> <button class="btn btn-warning">Back to HomePage</button></a></div>
     </div>

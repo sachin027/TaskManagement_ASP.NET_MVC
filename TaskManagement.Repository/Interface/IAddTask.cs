@@ -10,10 +10,8 @@ namespace TaskManagement.Repository.Interface
 {
     public interface IAddTask
     {
-        /// <summary>
-        /// Add task interface
-        /// </summary>
-        Tasks AddTask(TaskModel _taskModel);
+        /// <summary>Add task interface
+        bool AddTask(TaskModel _taskModel);
 
     }
 }

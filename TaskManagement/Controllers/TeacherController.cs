@@ -37,7 +37,9 @@ namespace TaskManagement.Controllers
         public ActionResult TeacherDashboard()
         {
             string name = SessionHelper.SessionHelper.Username;
-            ViewBag.TotalCreatedTaskByTeacher = _task.TotalCreatedTaskByTeacher(name);
+            List<AssignmentModelList> _taskList = new List<AssignmentModelList>();
+            //ViewBag.TotalCreatedTaskByTeacher = _task.TotalCreatedTaskByTeacher(name);
+            ViewBag.TotalCreatedTaskByTeacher = _task.GetCustomTaskList(name).Count();
             ViewBag.TotalTaskAssignToStudent = _task.TotalTaskAssignedToStudent(name);
             ViewBag.TotalCompletedTaskByStudent = _task.TotalCompletedTaskByStudent(name);
             ViewBag.TotalPendingTaskByStudent = _task.TotalPendingTaskByStudent(name);
@@ -54,15 +56,25 @@ namespace TaskManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTask(TaskModel customTaskModel)
+        public async Task<ActionResult> CreateTask(TaskModel customTaskModel)
         {
             try
             {
                 if (customTaskModel != null && ModelState.IsValid)
                 {
-                    _addTask.AddTask(customTaskModel);
-                    TempData["success"] = "Task added successfully";
-                    return RedirectToAction("TeacherDashboard");
+                    /*_addTask.AddTask(customTaskModel);*/
+
+                    bool ans = await WebAPIHelper.CreateTask(customTaskModel);
+                    if (ans)
+                    {
+                        TempData["success"] = "Task added successfully";
+                        return RedirectToAction("TeacherDashboard");
+                    }
+                    else
+                    {
+                        return View("CreateTask");
+                    }
+                    
                 }
                 else
                 {
@@ -77,30 +89,26 @@ namespace TaskManagement.Controllers
             }
         }
 
-
         ///Assign task to students
         public ActionResult AssignTask(int id)
         {
+            ViewBag.TaskId = id;
             List<StudentModel> _studentList = new List<StudentModel>();
             _studentList = _task.GetStudentListById(id);
             ViewBag._studentlist = _studentList;
-
-            List<TaskModel> _taskList = new List<TaskModel>();
-            string username = SessionHelper.SessionHelper.Username;
-            _taskList = _task.GetTaskList(username);
-            ViewBag._taskList = _taskList;
-
-            return PartialView("_AssignTask");
+            AssignmentModel assignmentModel = new AssignmentModel();
+            return PartialView("_AssignTask",assignmentModel);
         }
 
         [HttpPost]
-        public ActionResult AssignTask(AssignmentModel assignmentModel)
+        public async Task<ActionResult> AssignTask([Bind(Exclude = "status,Tasks,Students")] AssignmentModel assignmentModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    bool isSaving = _task.AssignTaskToStudent(assignmentModel);
+
+                    bool isSaving = await WebAPIHelper.AssignTask(assignmentModel);
 
                     if (isSaving)
                     {
@@ -108,8 +116,12 @@ namespace TaskManagement.Controllers
                         return RedirectToAction("TeacherDashboard");
                     }
                 }
+                List<StudentModel> _studentList = new List<StudentModel>();
+                _studentList = _task.GetStudentListById(assignmentModel.TaskID);
+                ViewBag._studentlist = _studentList;
+
                 TempData["error"] = "Something wrong";
-                return View();
+                return PartialView("_AssignTask",assignmentModel);
             }
             catch (Exception ex)
             {
@@ -119,50 +131,76 @@ namespace TaskManagement.Controllers
         }
 
         /// <summary> redirect to all task list page which created by teacher .
-        public ActionResult TaskList(int? pageNumber)
+        public async Task<ActionResult> TaskList(int? pageNumber)
         {
-            List<TaskModel> _taskList = new List<TaskModel>();
+            List<CustomTaskModel> _taskList = new List<CustomTaskModel>();
             string username = SessionHelper.SessionHelper.Username;
-            _taskList = _task.GetTaskList(username);
+            _taskList = await WebAPIHelper.GetCustomTaskList();
 
             int page = pageNumber ?? 1;
 
-           var _pagination = PaginatedList<TaskModel>.Pagination(_taskList, page);
+           var _pagination = PaginatedList<CustomTaskModel>.Pagination(_taskList, page);
 
-            ViewBag.totalCount = PaginatedList<TaskModel>.totalCount;
-            ViewBag.page = PaginatedList<TaskModel>.page;
-            ViewBag.pageSize = PaginatedList<TaskModel>.pageSize;
-            ViewBag.totalPage = PaginatedList<TaskModel>.totalPage;
+            ViewBag.totalCount = PaginatedList<CustomTaskModel>.totalCount;
+            ViewBag.page = PaginatedList<CustomTaskModel>.page;
+            ViewBag.pageSize = PaginatedList<CustomTaskModel>.pageSize;
+            ViewBag.totalPage = PaginatedList<CustomTaskModel>.totalPage;
 
             return View(_pagination);
             //return View(_taskList);
         }
 
         /// <summary> Get all task assigned student List
-        public async Task<ActionResult> GetAllTaskAssignedStudentList()
+        public async Task<ActionResult> GetAllTaskAssignedStudentList(int? pageNumber)
         {
             int id = SessionHelper.SessionHelper.UserId;
             List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
             assignmentModels = await WebAPIHelper.GetAllTaskAssignedStudentList();
-            return View(assignmentModels);
+
+            int page = pageNumber ?? 1;
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(assignmentModels, page);
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+
+            return View(_pagination);
         }
 
         /// <summary> Get all completed task student list
-        public async Task<ActionResult> CompletedStudentList()
+        public async Task<ActionResult> CompletedStudentList(int? pageNumber)
         {
             int id = SessionHelper.SessionHelper.UserId;
             List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
             assignmentModels = await WebAPIHelper.CompletedStudentList();
-            return View(assignmentModels);
+
+            int page = pageNumber ?? 1;
+
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(assignmentModels, page);
+
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+            return View(_pagination);
         }
 
         /// <summary> Get all pending task student list
-        public async Task<ActionResult> PendingStudentList()
+        public async Task<ActionResult> PendingStudentList(int? pageNumber)
         {
             int id = SessionHelper.SessionHelper.UserId;
             List<AssignmentModelList> assignmentModels = new List<AssignmentModelList>();
             assignmentModels = await WebAPIHelper.PendingStudentList();
-            return View(assignmentModels);
+
+            int page = pageNumber ?? 1;
+
+            var _pagination = PaginatedList<AssignmentModelList>.Pagination(assignmentModels, page);
+
+            ViewBag.totalCount = PaginatedList<AssignmentModelList>.totalCount;
+            ViewBag.page = PaginatedList<AssignmentModelList>.page;
+            ViewBag.pageSize = PaginatedList<AssignmentModelList>.pageSize;
+            ViewBag.totalPage = PaginatedList<AssignmentModelList>.totalPage;
+            return View(_pagination);
         }
 
         /// <summary> Log out from dashboard and redirect to Login page - session  will end
